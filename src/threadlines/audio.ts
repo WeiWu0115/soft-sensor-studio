@@ -1,0 +1,3 @@
+let context:AudioContext|null=null;
+export async function playNote(midi:number){context??=new AudioContext();if(context.state==='suspended')await context.resume();const t=context.currentTime;const osc=context.createOscillator(),gain=context.createGain();osc.type='sine';osc.frequency.value=440*2**((midi-69)/12);gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.13,t+.015);gain.gain.exponentialRampToValueAtTime(.001,t+.7);osc.connect(gain);gain.connect(context.destination);osc.start(t);osc.stop(t+.75);}
+export const notes=[{midi:60,label:'C4'},{midi:62,label:'D4'},{midi:64,label:'E4'},{midi:67,label:'G4'},{midi:69,label:'A4'},{midi:72,label:'C5'},{midi:74,label:'D5'},{midi:76,label:'E5'}];

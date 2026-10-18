@@ -85,3 +85,34 @@ The separate [Material Playground](https://sharkburger.github.io/soft-sensor-stu
 `src/showcase/pattern.ts` contains motif generation, geometric metrics, knit drawing and a documented toy response formula. The curve uses the selected motif label, coverage, loop-length setting, direction and strain; it does not solve the painted network electrically. A/B markers are conceptual contact edges, not validated electrode connections. Pattern adjacency does not establish electrical continuity. Choosing a motif or changing trace width regenerates the painted design and can be undone.
 
 The showcase is a second Vite entry (`showcase.html`). Both entries build and deploy together. No separate services or credentials are required.
+
+## Threadlines — personal data workshop edition
+
+Independent entry: [Threadlines](https://sharkburger.github.io/soft-sensor-studio/threadlines.html). Earlier CAD and Material Playground versions remain available.
+
+Threadlines turns personal time-series data into an artistic textile. It supports a column-mapping import flow for CSV, TSV and JSON record arrays (including `{ "data": [...] }`), three motifs, palette selection, physical size/gauge settings, a textured hanging-object preview, and optional conductive yarn roles with synthesized note playback. Supported files are limited to 8 MB and 100,000 rows. Vendor exports have not been exhaustively validated; inspect and select columns during import. PDF reports and ZIP archives are not parsed.
+
+**Starting with Oura:** request an export in the [Oura Membership Hub](https://support.ouraring.com/hc/en-us/articles/360025441594-Export-Share-Your-Oura-Data). Unzip the download and select a table or JSON record file. Select the date/time field and a numeric metric such as a score. Duration fields may be in seconds. Unit selection labels the original values; it never converts them. The export may take time to become available, as described by Oura.
+
+**Starting with glucose data:** [Dexcom Clarity supports CSV export](https://www.dexcom.com/en-us/faqs/can-i-export-raw-data). Other device tables may work with manual column selection but have not been device-validated. This is an artistic workshop tool, not a clinical chart or treatment aid.
+
+### Data and mapping
+
+- Fictional examples include a 288-point glucose-style day and a 28-day Oura-style score sequence. They are explicitly labeled synthetic.
+- No account connection, token, backend upload, analytics or persistence of imported data. Imported measurements are held in browser memory. Refresh or Clear Session removes them. Files explicitly downloaded by the participant remain on that participant's device.
+- ISO timestamps are supported; ambiguous slash dates require explicit MDY/DMY selection. Timestamps with offsets retain their absolute times. Offset-free times are treated as UTC; the UI displays UTC.
+- Invalid/non-numeric rows are skipped and reported. Duplicate timestamps keep the last value and are reported. Measurements are sorted by time.
+- Equal-duration time bins use arithmetic means. The number of bins is the smaller of sample count and course count. When bins are fewer than courses, bin results repeat across courses for a legible textile. Empty bins remain base yarn, without interpolation.
+- Four equal-width intervals between selected minimum and maximum assign yarn roles. These are artistic ranges, never medical thresholds. Constant-valued datasets use the middle of the artistic scale.
+- Ribbon maps value to width plus color; Strata maps value to color; Steps maps value to bar length plus color. Time is bottom-to-top unless reversed.
+- Conductive role, display color and assigned musical note are separate properties. Browser audio is a sound sketch. An actual textile instrument requires electrode routing, touch sensing electronics and physical tests.
+
+### Exports
+
+One pixel equals one cell in the lossless palette PNG. Download its JSON manifest separately for palette meanings, conductive roles, notes and mapping metadata. CSV contains column, row and yarn role. Editable session JSON includes personal measurements and should be kept private; opening it restores the session. No raw participant measurements are included in this repository or deployed site.
+
+The PNG/CSV/manifest are design representations. Yarn carriers, stitch operations and electrode connections are unassigned. Kniterate compatibility and fabrication are unverified. No machine code is generated.
+
+### Verification
+
+28 automated tests cover the original CAD, Material Playground, time parsing, CSV/JSON mapping, missing bins, geometric orientation, exact export pixel colors, manifests and session round trips. Production TypeScript build passes. A fictional local Oura-style CSV was imported through the browser and mapped successfully; conductive role selection and sound controls were exercised. In-app-browser download-event capture is limited; native download behavior should also be checked in the workshop's chosen browser. No physical machine or instrument was tested.
