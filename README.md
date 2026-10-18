@@ -68,3 +68,20 @@ The cylinder is a spatial preview, not a cloth, anatomical fit, electrical or cl
 ## GitHub Pages deployment
 
 The pinned GitHub Actions workflow `.github/workflows/deploy.yml` runs tests and builds on Node 24 before deploying `dist/` to Pages. Pushes to `main` redeploy automatically; manual workflow dispatch is also available. The Vite base is `/soft-sensor-studio/`, matching this repository path. Deployment follows the [official Vite GitHub Pages guide](https://vite.dev/guide/static-deploy.html#github-pages). No tokens are embedded in the source or frontend; projects remain in the visitor’s own browser localStorage.
+
+## Material Playground — presentation edition
+
+The separate [Material Playground](https://sharkburger.github.io/soft-sensor-studio/showcase.html) is intended for research demos and presentations. The original CAD editor remains at the root URL.
+
+- Four procedural knitted motifs: Contour, Meander, Chevron, Lattice.
+- Paint/erase conductive stitches directly on the textured swatch; undo/redo edits; switch to assignment-grid view; zoom the swatch.
+- Adjust motif trace width, illustrative loop length, material display color and sleeve use case.
+- Linked textured 3D sleeve with orbit, auto-rotation, reset and transparency.
+- Interactive dimensionless demo response with strain slider, playback, direction comparison and expanded chart.
+- Exact grid-derived conductive coverage, stitch count and connected-region count.
+- Independent local autosave; editable study JSON save/open; visual swatch PNG download. PNG here is a high-resolution visualization, not a one-pixel-per-stitch fabrication file.
+- Explicit model notes and study format separate from the CAD project schema. No measured yarn resistance or calibrated conductivity is claimed.
+
+`src/showcase/pattern.ts` contains motif generation, geometric metrics, knit drawing and a documented toy response formula. The curve uses the selected motif label, coverage, loop-length setting, direction and strain; it does not solve the painted network electrically. A/B markers are conceptual contact edges, not validated electrode connections. Pattern adjacency does not establish electrical continuity. Choosing a motif or changing trace width regenerates the painted design and can be undone.
+
+The showcase is a second Vite entry (`showcase.html`). Both entries build and deploy together. No separate services or credentials are required.
