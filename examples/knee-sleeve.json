@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "name": "Knee sleeve — exploration 01",
+  "garment": {
+    "joint": "Knee",
+    "circumferenceMm": 360,
+    "lengthMm": 240,
+    "stitchWidthMm": 2,
+    "rowHeightMm": 2
+  },
+  "baseMaterialId": "base",
+  "structure": "Single jersey",
+  "materials": [
+    {
+      "id": "base",
+      "name": "Soft base yarn",
+      "yarnType": "Nonconductive",
+      "notes": "Illustrative profile; measure gauge on a swatch.",
+      "calibrated": false
+    },
+    {
+      "id": "conductive",
+      "name": "Conductive yarn",
+      "yarnType": "Conductive",
+      "notes": "Illustrative profile; no electrical calibration.",
+      "calibrated": false
+    }
+  ],
+  "sensors": [
+    {
+      "id": "sensor-example-1",
+      "name": "Flexion sensor",
+      "column": 70,
+      "row": 32,
+      "width": 24,
+      "height": 56,
+      "materialId": "conductive",
+      "structure": "Single jersey",
+      "channel": "CH-01",
+      "color": "#bd6746"
+    },
+    {
+      "id": "sensor-example-2",
+      "name": "Reference sensor",
+      "column": 112,
+      "row": 40,
+      "width": 18,
+      "height": 40,
+      "materialId": "conductive",
+      "structure": "Single jersey",
+      "channel": "CH-02",
+      "color": "#497b74"
+    }
+  ]
+}
