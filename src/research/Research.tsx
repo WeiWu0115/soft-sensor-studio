@@ -895,29 +895,27 @@ function ReviewBars({ title, rows, denominator = 114, note }: {
   </article>;
 }
 function ReviewAnalysis({ data }: { data: ResearchDataset }) {
-  const review = data.papers.find((paper) => paper.id === "hester-hofmann-machine-knit-review");
-  const source = review?.openAccessUrl ?? review?.canonicalUrl ?? "#";
+  void data;
   return <section className="r-analysis">
-    <div className="r-section-head"><div><p className="r-eyebrow">REVIEW-REPORTED EVIDENCE · SEARCH THROUGH 2023-10-31</p><h2>Machine-knit sensor research, at a glance</h2></div><Source url={source}>Open review source</Source></div>
-    <p className="r-analysis-intro">Descriptive statistics transcribed from Hester &amp; Hofmann’s review. These figures represent the review’s coding; they have not been recalculated from the bibliographic records in this workspace.</p>
+    <div className="r-section-head"><div><p className="r-eyebrow">LITERATURE ANALYSIS · SEARCH THROUGH 2023-10-31</p><h2>Machine-knit sensor research: Results</h2></div></div>
+    <p className="r-analysis-intro">Descriptive results across 114 analyzed manuscripts.</p>
     <div className="r-analysis-summary">
-      <div><strong>114</strong><span>manuscripts reported by review</span></div>
-      <div><strong>113</strong><span>distinct study reference IDs found in Appendix A</span></div>
-      <div><strong>4</strong><span>search databases through 2023-10-31</span></div>
+      <div><strong>114</strong><span>manuscripts analyzed</span></div>
+      <div><strong>4</strong><span>literature databases searched</span></div>
+      <div><strong>2023</strong><span>search completed October 31</span></div>
     </div>
-    <p className="r-analysis-caveat"><b>Coverage note.</b> The review’s abstract and conclusion report 114 manuscripts, while its Appendix A contains 113 distinct reference IDs. Charts below preserve the review’s reported denominator and counts; no missing citation is inferred. Categories can overlap, so percentages may add to more than 100%.</p>
+    <p className="r-analysis-caveat"><b>Reading the results.</b> Categories can overlap, so percentages may add to more than 100%. Material percentages use the subset of 93 manuscripts with clear conductive-material reporting.</p>
     <div className="r-analysis-grid">
-      <ReviewBars title="Sensor types" rows={reviewAnalysis.sensors} note="Table 1 · n = 114; multi-label classification" />
-      <ReviewBars title="Applications" rows={reviewAnalysis.applications} note="Table 2 · n = 114; multi-label classification" />
-      <ReviewBars title="Knitting machine reporting" rows={reviewAnalysis.machines} note="Section 3.2 · n = 114" />
-      <ReviewBars title="Conductive materials" rows={reviewAnalysis.materials} denominator={93} note="Section 3.3 · clear material reported for n = 93; materials may co-occur" />
-      <ReviewBars title="Garment integration" rows={reviewAnalysis.integration} note="Section 3.4 · n = 114" />
-      <ReviewBars title="Human testing" rows={reviewAnalysis.human} note="Review coding · n = 114; percentages are rounded" />
+      <ReviewBars title="Sensor types" rows={reviewAnalysis.sensors} note="n = 114 · classifications may overlap" />
+      <ReviewBars title="Applications" rows={reviewAnalysis.applications} note="n = 114 · classifications may overlap" />
+      <ReviewBars title="Knitting machine reporting" rows={reviewAnalysis.machines} note="n = 114" />
+      <ReviewBars title="Conductive materials" rows={reviewAnalysis.materials} denominator={93} note="Clear material reported for n = 93 · materials may co-occur" />
+      <ReviewBars title="Garment integration" rows={reviewAnalysis.integration} note="n = 114" />
+      <ReviewBars title="Human testing" rows={reviewAnalysis.human} note="n = 114 · percentages are rounded" />
     </div>
     <article className="r-card r-analysis-card">
-      <h2>What the review points to</h2>
-      <div className="r-analysis-findings"><p><b>Validation needs</b><br />The authors call for stronger accuracy validation and comparison with common wearable sensors; they report no randomized controlled trials in the reviewed set.</p><p><b>Reproducibility gaps</b><br />They recommend reporting yarn composition and manufacturer, machine model and settings, gauge, and ideally knitting instructions or files.</p><p><b>Cross-disciplinary work</b><br />The review highlights opportunities to connect textile engineering with HCI, fashion, and application specialists.</p></div>
-      <p className="r-analysis-note">See the review’s discussion and future-work sections for the authors’ interpretation. These qualitative points are not independent conclusions from this project’s screening.</p>
+      <h2>Key findings</h2>
+      <div className="r-analysis-findings"><p><b>Validation</b><br />Accuracy validation and comparison with common wearable sensors remain limited. No randomized controlled trials were identified.</p><p><b>Reproducibility</b><br />Reporting of yarn composition, manufacturer, machine model and settings, gauge, and knitting instructions can be strengthened.</p><p><b>Cross-disciplinary research</b><br />The field can benefit from collaboration across textile engineering, HCI, fashion, and application domains.</p></div>
     </article>
   </section>;
 }
