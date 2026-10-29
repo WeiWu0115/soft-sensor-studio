@@ -385,15 +385,16 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
   if (c.elements.length > 190 || sensor.width < 8 || sensor.height < 6) return p;
   const y = sensor.row + Math.floor(sensor.height / 2);
   const padY = y - 2;
+  const routeLane = Math.max(4, sensor.row - 8);
   const leftPad = createCircuitElement("electrode", { column: sensor.column - 4, row: padY }, "c-fabric");
   leftPad.name = `${sensor.name} · Pin A`;
   leftPad.width = 4; leftPad.height = 4;
   const rightPad = createCircuitElement("electrode", { column: sensor.column + sensor.width, row: padY }, "c-fabric");
   rightPad.name = `${sensor.name} · Pin B`;
   rightPad.width = 4; rightPad.height = 4;
-  const leftTerminal = createCircuitElement("terminal", { column: sensor.column - 16, row: padY }, "connector");
+  const leftTerminal = createCircuitElement("terminal", { column: sensor.column - 16, row: routeLane - 2 }, "connector");
   leftTerminal.name = `${sensor.name} · Readout A`;
-  const rightTerminal = createCircuitElement("terminal", { column: sensor.column + sensor.width + 12, row: padY }, "connector");
+  const rightTerminal = createCircuitElement("terminal", { column: sensor.column + sensor.width + 12, row: routeLane - 2 }, "connector");
   rightTerminal.name = `${sensor.name} · Readout B`;
   const sensing = createCircuitElement("sensing-region", { column: sensor.column, row: sensor.row }, sensor.materialId);
   sensing.name = `${sensor.name} · Sensing element`;
@@ -406,8 +407,8 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
   const traces = [
     makeTrace(`${sensor.name} · Contact A`, [{ column: sensor.column - 2, row: y }, { column: sensor.column, row: y }], leftPad.id, sensing.id),
     makeTrace(`${sensor.name} · Contact B`, [{ column: sensor.column + sensor.width + 2, row: y }, { column: sensor.column + sensor.width, row: y }], rightPad.id, sensing.id),
-    makeTrace(`${sensor.name} · Lead A`, [{ column: sensor.column - 2, row: y }, { column: sensor.column - 14, row: y }], leftPad.id, leftTerminal.id),
-    makeTrace(`${sensor.name} · Lead B`, [{ column: sensor.column + sensor.width + 2, row: y }, { column: sensor.column + sensor.width + 14, row: y }], rightPad.id, rightTerminal.id),
+    makeTrace(`${sensor.name} · Lead A`, [{ column: sensor.column - 2, row: y }, { column: sensor.column - 2, row: routeLane }, { column: sensor.column - 14, row: routeLane }], leftPad.id, leftTerminal.id),
+    makeTrace(`${sensor.name} · Lead B`, [{ column: sensor.column + sensor.width + 2, row: y }, { column: sensor.column + sensor.width + 2, row: routeLane }, { column: sensor.column + sensor.width + 14, row: routeLane }], rightPad.id, rightTerminal.id),
   ];
   const isolation = createCircuitElement("insulation", { column: sensor.column - 8, row: sensor.row - 4 }, "dielectric");
   isolation.name = `${sensor.name} · Isolation layer`;
@@ -430,22 +431,22 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
 }
 export function syncSensorCircuit(p: Project, before: Project["sensors"][number], sensor: Project["sensors"][number]): Project {
   if (!p.circuit?.elements.some((element) => element.sensorId === sensor.id)) return p;
-  const y = sensor.row + Math.floor(sensor.height / 2), padY = y - 2;
+  const y = sensor.row + Math.floor(sensor.height / 2), padY = y - 2, routeLane = Math.max(4, sensor.row - 8);
   const patchElement = (element: CircuitElement): CircuitElement => {
     const suffix = element.name.includes(" · ") ? element.name.slice(element.name.lastIndexOf(" · ")) : "";
     const base = { ...element, name: `${sensor.name}${suffix}`, channel: sensor.channel, knitStructureId: sensor.knitStructureId };
     if (element.kind === "sensing-region") return { ...base, column: sensor.column, row: sensor.row, width: sensor.width, height: sensor.height, materialId: sensor.materialId, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin A")) return { ...base, column: sensor.column - 4, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin B")) return { ...base, column: sensor.column + sensor.width, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
-    if (element.kind === "terminal" && element.name.endsWith("Readout A")) return { ...base, column: sensor.column - 16, row: padY };
-    if (element.kind === "terminal" && element.name.endsWith("Readout B")) return { ...base, column: sensor.column + sensor.width + 12, row: padY };
+    if (element.kind === "terminal" && element.name.endsWith("Readout A")) return { ...base, column: sensor.column - 16, row: routeLane - 2 };
+    if (element.kind === "terminal" && element.name.endsWith("Readout B")) return { ...base, column: sensor.column + sensor.width + 12, row: routeLane - 2 };
     if (element.kind === "insulation") return { ...base, column: sensor.column - 8, row: sensor.row - 4, width: sensor.width + 16, height: sensor.height + 8 };
     if (element.kind === "trace") {
       const left = sensor.column, right = sensor.column + sensor.width;
       const points = element.name.endsWith("Contact A") ? [{ column: left - 2, row: y }, { column: left, row: y }]
         : element.name.endsWith("Contact B") ? [{ column: right + 2, row: y }, { column: right, row: y }]
-        : element.name.endsWith("Lead A") ? [{ column: left - 2, row: y }, { column: left - 14, row: y }]
-        : [{ column: right + 2, row: y }, { column: right + 14, row: y }];
+        : element.name.endsWith("Lead A") ? [{ column: left - 2, row: y }, { column: left - 2, row: routeLane }, { column: left - 14, row: routeLane }]
+        : [{ column: right + 2, row: y }, { column: right + 2, row: routeLane }, { column: right + 14, row: routeLane }];
       return { ...base, points, column: points[0].column, row: points[0].row };
     }
     return base;
