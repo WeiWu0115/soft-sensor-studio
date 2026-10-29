@@ -105,18 +105,10 @@ function load() {
 const sections = [
   "database",
   "analysis",
-  "atlas",
-  "screening",
-  "requirements",
-  "methods",
 ] as const;
 const titles = [
   "Paper Database",
   "Analysis",
-  "Evidence / Design Atlas",
-  "Screening Workspace",
-  "Knowledge-to-CAD Requirements",
-  "Methods & Sources",
 ];
 const link = (paper?: string, section = "database") =>
   `?view=research&section=${section}${paper ? "&paper=" + encodeURIComponent(paper) : ""}`;
@@ -245,8 +237,7 @@ export default function Research() {
         <div>
           <p className="r-eyebrow">CLINICAL-TO-TEXTILE TRANSLATION</p>
           <h1>
-            Research Database
-            <br />& Evidence Atlas<span>.</span>
+            Research Database<span>.</span>
           </h1>
           <p>
             A source-linked workspace for mapping how textile tools turn
