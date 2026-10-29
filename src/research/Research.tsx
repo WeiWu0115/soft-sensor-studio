@@ -32,11 +32,51 @@ const initialSeed = () => parseResearch(JSON.stringify(seed));
 function load() {
   try {
     const s = localStorage.getItem(storageKey);
+    if (s) {
+      const saved = parseResearch(s);
+      const seedData = initialSeed();
+      const knownPaperIds = new Set(saved.papers.map((paper) => paper.id));
+      const additions = seedData.papers.filter(
+        (paper) => !knownPaperIds.has(paper.id),
+      );
+      if (additions.length) {
+        const addedIds = new Set(additions.map((paper) => paper.id));
+        const merged = parseResearch(
+          JSON.stringify({
+            ...saved,
+            papers: [...saved.papers, ...additions],
+            screening: [
+              ...saved.screening,
+              ...seedData.screening.filter((record) =>
+                addedIds.has(record.paperId),
+              ),
+            ],
+            coding: [
+              ...saved.coding,
+              ...seedData.coding.filter((record) =>
+                addedIds.has(record.paperId),
+              ),
+            ],
+          }),
+        );
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(merged));
+        } catch {
+          // Keep the merged seed available in memory when browser storage is full.
+        }
+        return {
+          data: merged,
+          message: `Restored local Research workspace and added ${additions.length} new seed candidate${additions.length === 1 ? "" : "s"}.`,
+        };
+      }
+      return {
+        data: saved,
+        message: "Restored local Research workspace.",
+      };
+    }
     return {
-      data: s ? parseResearch(s) : initialSeed(),
-      message: s
-        ? "Restored local Research workspace."
-        : "Seed corpus loaded. Changes are local to this browser.",
+      data: initialSeed(),
+      message: "Seed corpus loaded. Changes are local to this browser.",
     };
   } catch (e) {
     return {

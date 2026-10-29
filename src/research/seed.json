@@ -524,9 +524,59 @@
       "notes": "Bibliography checked against paper first-page citation; author order follows that citation rather than project-page layout.",
       "canonicalUrl": "https://pneuact.csail.mit.edu/file/CHI2022.pdf",
       "doi": "10.1145/3491102.3517577"
+    },
+    {
+      "id": "hester-hofmann-machine-knit-review",
+      "title": "Machine-knit sensors: A review and road map for future research",
+      "authors": [
+        "Jack Hester",
+        "Megan Hofmann"
+      ],
+      "year": null,
+      "venue": null,
+      "publicationType": "preprint",
+      "canonicalUrl": "https://actlab.sites.northeastern.edu/jack-hester/",
+      "openAccessUrl": "https://www.researchgate.net/publication/387321239_Machine-knit_sensors_A_review_and_road_map_for_future_research",
+      "abstract": "A mapping review of machine-knit sensor research that summarizes sensor types, applications, materials, knitting machines, garment integration and human testing, then identifies validation and reproducibility needs.",
+      "keywords": [
+        "machine knitting",
+        "knitted sensors",
+        "mapping review",
+        "wearable sensing",
+        "reproducibility"
+      ],
+      "topics": [
+        "Knitted sensing",
+        "Background review"
+      ],
+      "verificationStatus": "partially_verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://actlab.sites.northeastern.edu/jack-hester/",
+          "checkDate": "2026-10-29",
+          "fields": [
+            "title",
+            "authors"
+          ]
+        }
+      ],
+      "provenance": "manual_import",
+      "dateAdded": "2026-10-29",
+      "updatedAt": "2026-10-29",
+      "notes": "Background-only candidate, not a primary study; keep outside core inclusion counts unless the protocol explicitly expands to reviews. The user-provided 22-page PDF reports a mapping review of 114 machine-knit sensor manuscripts and a search across ACM Digital Library, PubMed, IEEE Xplore and ScienceDirect through 2023-10-31. Useful for background on sensor types, materials, machine reporting, human testing and reproducibility. Bibliographic metadata remains unresolved: the PDF prints a 2018 JACM 37(4) citation but its DOI is a placeholder, so year, venue and DOI are intentionally unset. The institutional author page supports the title and author names, but does not resolve publication details."
     }
   ],
-  "screening": [],
+  "screening": [
+    {
+      "id": "screen-machineknit-review",
+      "paperId": "hester-hofmann-machine-knit-review",
+      "reviewStage": "full_text",
+      "decision": "maybe",
+      "reviewerId": "seed-source-notes",
+      "decisionDate": "2026-10-29",
+      "comment": "Retain as background evidence. It is a secondary mapping review, while current eligibility emphasizes primary research; do not include it in primary-study counts without a protocol decision."
+    }
+  ],
   "coding": [
     {
       "id": "seed-knitui",
@@ -708,6 +758,71 @@
       "relevanceToStudio": "A workflow comparison, not validated design guidance.",
       "proposedFeatureIds": [],
       "updatedAt": "2026-10-28"
+    },
+    {
+      "id": "seed-machineknit-review",
+      "paperId": "hester-hofmann-machine-knit-review",
+      "reviewerId": "seed-source-notes",
+      "codebookVersion": "1.0",
+      "status": "in_progress",
+      "fabricationMethods": [
+        "knit"
+      ],
+      "sensorModalities": [
+        "strain",
+        "resistive",
+        "capacitive",
+        "pressure",
+        "bioelectric"
+      ],
+      "representations": [],
+      "authoringCapabilities": [],
+      "targetRoles": [
+        "researcher"
+      ],
+      "evaluationMethods": [],
+      "fabricationMaturity": "unknown",
+      "designRights": [],
+      "claims": [
+        {
+          "text": "The mapping review included 114 machine-knit sensor manuscripts after screening.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Abstract; Section 2.1, Search and screening",
+          "sourceUrl": "https://www.researchgate.net/publication/387321239_Machine-knit_sensors_A_review_and_road_map_for_future_research"
+        },
+        {
+          "text": "Stretch/strain sensors were the most common sensor type in the review (53 manuscripts; 46.5%).",
+          "evidenceLevel": "directly_reported",
+          "locator": "Section 3.1, Sensors developed; Table 1",
+          "sourceUrl": "https://www.researchgate.net/publication/387321239_Machine-knit_sensors_A_review_and_road_map_for_future_research"
+        },
+        {
+          "text": "The review reports that 32 studies (28.1%) integrated sensors directly into a full garment, while 67 (58.8%) reported no garment integration.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Section 3.4, Integration and human testing",
+          "sourceUrl": "https://www.researchgate.net/publication/387321239_Machine-knit_sensors_A_review_and_road_map_for_future_research"
+        },
+        {
+          "text": "The authors recommend reporting yarn composition/manufacturer, knitting-machine model and settings such as gauge, and ideally knitting instructions or machine files to support replication.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Section 4.3, Discussion",
+          "sourceUrl": "https://www.researchgate.net/publication/387321239_Machine-knit_sensors_A_review_and_road_map_for_future_research"
+        },
+        {
+          "text": "The review identifies limited comparison against common wearables and no randomized controlled trials among the reviewed studies, and calls for better accuracy validation and collaboration with HCI and fashion experts.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Section 4.3, Discussion",
+          "sourceUrl": "https://www.researchgate.net/publication/387321239_Machine-knit_sensors_A_review_and_road_map_for_future_research"
+        }
+      ],
+      "limitations": [
+        "Secondary mapping review; not a primary sensor prototype or authoring-tool study.",
+        "The database search ended on 2023-10-31, so the review does not represent later publications.",
+        "Bibliographic publication details in the supplied PDF remain unresolved; figures and counts are reported as the review's findings, not independently re-extracted across all 114 papers."
+      ],
+      "relevanceToStudio": "Useful background for the review taxonomy and for documenting material, machine, gauge and fabrication-file provenance. Its recommendations are research context, not validated requirements or performance claims for Soft Sensor Studio.",
+      "proposedFeatureIds": [],
+      "updatedAt": "2026-10-29"
     }
   ],
   "requirements": [
