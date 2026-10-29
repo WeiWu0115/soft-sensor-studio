@@ -12,7 +12,7 @@ export function CircuitCanvas({
   rows: number;
   pan: boolean;
 }) {
-  const { project: p, selected, select, commit } = useStudio(),
+  const { project: p, selected, select, commit, patchSensor } = useStudio(),
     ui = useCircuitUI();
   const editable = ui.enabled && ui.tool === "select" && !pan;
   return (
@@ -38,6 +38,16 @@ export function CircuitCanvas({
               const dx = Math.round(v.target.x() / scale),
                 dy = -Math.round(v.target.y() / scale);
               v.target.position({ x: 0, y: 0 });
+              if (e.kind === "sensing-region" && e.sensorId) {
+                const sensor = p.sensors.find((item) => item.id === e.sensorId);
+                if (sensor) {
+                  patchSensor(sensor.id, {
+                    column: sensor.column + dx,
+                    row: sensor.row + dy,
+                  });
+                  return;
+                }
+              }
               commit(
                 updateCircuitElement(p, e.id, translateElement(e, dx, dy)),
               );

@@ -164,7 +164,10 @@ export function CircuitPanel() {
         <p className="hint">
           Click the grid to place an object. For traces, click successive
           vertices, then Finish trace. Select to move an object; edit vertices
-          in Properties. Escape cancels drawing.
+          in Properties. Drag a Sensor's sensing region to move its complete
+          block with pins, readout terminals and assigned leads. Route endpoints
+          near a pad or terminal snap to it and receive an explicit link when
+          they share a textile layer. Escape cancels drawing.
         </p>
         {ui.tool === "trace" && (
           <div className="circuit-tools">

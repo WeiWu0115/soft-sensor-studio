@@ -64,9 +64,37 @@ export function finishTrace(
     (p.circuit?.elements.length ?? 0) >= 200
   )
     return p;
-  const e = createCircuitElement("trace", points[0], materialId);
-  e.points = points.map((q) => ({ ...q }));
   const c = p.circuit ?? emptyCircuit(p.garment.joint);
+  const targets = [
+    ...c.elements.filter((item) => item.kind === "electrode" || item.kind === "terminal"),
+  ];
+  const nearest = (q: Point, layer?: CircuitElement["textileLayer"]) => {
+    const ranked = targets
+      .filter((item) => layer === undefined || (item.textileLayer ?? "surface") === layer)
+      .map((item) => {
+        const point = {
+          column: Math.max(item.column, Math.min(item.column + item.width, q.column)),
+          row: Math.max(item.row, Math.min(item.row + item.height, q.row)),
+        };
+        return { item, point, distance: Math.hypot(point.column - q.column, point.row - q.row) };
+      })
+      .filter((item) => item.distance <= 3)
+      .sort((a, b) => a.distance - b.distance);
+    return ranked[0];
+  };
+  const start = nearest(points[0]);
+  const end = start
+    ? nearest(points.at(-1)!, start.item.textileLayer ?? "surface")
+    : nearest(points.at(-1)!);
+  const routed = points.map((q) => ({ ...q }));
+  if (start) routed[0] = start.point;
+  if (end) routed[routed.length - 1] = end.point;
+  const e = createCircuitElement("trace", routed[0], materialId);
+  e.points = routed;
+  e.fromId = start?.item.id;
+  e.toId = end?.item.id;
+  e.textileLayer = start?.item.textileLayer ?? end?.item.textileLayer ?? "surface";
+  e.channel = start?.item.channel ?? end?.item.channel ?? "";
   return { ...p, circuit: { ...c, elements: [...c.elements, e] } };
 }
 const distance = (p: Point, a: Point, b: Point) => {
