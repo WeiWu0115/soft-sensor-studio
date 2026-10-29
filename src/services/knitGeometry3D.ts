@@ -27,7 +27,9 @@ export function yarnInstances(s:KnitStructure,columns:number,rows:number,radius:
   const op=stitchAt(s.id,c,r),theta=2*Math.PI*(c+.5)/plan.columns;
   // Rib relief follows the representative repeat, never a mechanical deformation model.
   const rib=s.category==='Rib'?(op==='P'?-.08:.16)*width:0;
-  const radial=radius+.35+rib;
+  // Keep the yarn tube visibly above the garment shell; the tube radius is
+  // about 0.34 mm at the default gauge, so a 0.35 mm offset nearly hid it.
+  const radial=radius+1+rib;
   const matrix=new THREE.Matrix4().makeRotationY(theta);
   matrix.setPosition(radial*Math.sin(theta),(r+.5)*courseHeight-height/2,radial*Math.cos(theta));
   if(!groups.has(op))groups.set(op,[]);groups.get(op)!.push(matrix);
