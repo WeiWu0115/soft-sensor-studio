@@ -25,6 +25,7 @@ export interface CircuitElement {
   textileLayer?: TextileLayer;
   sensorId?: string;
   knitStructureId?: string;
+  sensorTemplateVersion?: number;
 }
 export interface CircuitDesign {
   version: 1;

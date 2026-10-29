@@ -415,6 +415,7 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
   isolation.width = sensor.width + 16; isolation.height = sensor.height + 8;
   for (const element of [sensing, leftPad, rightPad, leftTerminal, rightTerminal, isolation, ...traces]) {
     element.sensorId = sensor.id;
+    element.sensorTemplateVersion = 2;
     element.channel = sensor.channel;
     element.knitStructureId = sensor.knitStructureId;
     element.textileLayer = element.kind === "trace" || element.kind === "insulation" ? "integrated" : sensor.textileLayer ?? "surface";
@@ -434,7 +435,7 @@ export function syncSensorCircuit(p: Project, before: Project["sensors"][number]
   const y = sensor.row + Math.floor(sensor.height / 2), padY = y - 2, routeLane = Math.max(4, sensor.row - 8);
   const patchElement = (element: CircuitElement): CircuitElement => {
     const suffix = element.name.includes(" · ") ? element.name.slice(element.name.lastIndexOf(" · ")) : "";
-    const base = { ...element, name: `${sensor.name}${suffix}`, channel: sensor.channel, knitStructureId: sensor.knitStructureId };
+    const base = { ...element, sensorTemplateVersion: 2, name: `${sensor.name}${suffix}`, channel: sensor.channel, knitStructureId: sensor.knitStructureId };
     if (element.kind === "sensing-region") return { ...base, column: sensor.column, row: sensor.row, width: sensor.width, height: sensor.height, materialId: sensor.materialId, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin A")) return { ...base, column: sensor.column - 4, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin B")) return { ...base, column: sensor.column + sensor.width, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
