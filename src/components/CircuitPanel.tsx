@@ -6,6 +6,7 @@ import {
   kindLabel,
   emptyCircuit,
   circuitColors,
+  type TextileLayer,
 } from "../models/circuit";
 import { circuitLibrary } from "../data/softCircuitLibrary";
 import {
@@ -24,6 +25,9 @@ export function CircuitPanel() {
   const update = (patch: Partial<typeof c>) =>
     commit({ ...p, circuit: { ...c, ...patch } });
   const selectedElement = c.elements.find((element) => element.id === selected);
+  const activeLayers: TextileLayer[] = p.layerMode === "double"
+    ? ["surface", "inner", "integrated"]
+    : ["surface", "integrated"];
   const useProfile = (profile: (typeof circuitLibrary)[number]) => {
     if (selectedElement && selectedElement.kind === profile.kind) {
       commit({
@@ -59,6 +63,36 @@ export function CircuitPanel() {
   };
   return (
     <>
+      <section className="board-setup">
+        <h3>Textile stack</h3>
+        <div className="joint-select">
+          {(["single", "double"] as const).map((mode) => (
+            <button
+              key={mode}
+              className={(p.layerMode ?? "single") === mode ? "active" : ""}
+              onClick={() => {
+                commit({ ...p, layerMode: mode });
+                if (mode === "single") ui.set({ activeLayer: "surface" });
+              }}
+            >
+              {mode === "single" ? "Single layer" : "Double layer"}
+            </button>
+          ))}
+        </div>
+        <p className="hint">Choose the garment stack, then select the board layer for placement and routing.</p>
+        <h3>Board layers</h3>
+        <div className="layer-tabs" role="group" aria-label="Active textile layer">
+          {activeLayers.map((layer) => (
+            <button
+              key={layer}
+              className={ui.activeLayer === layer ? "active" : ""}
+              onClick={() => ui.set({ activeLayer: layer })}
+            >
+              {layer === "surface" ? "Surface" : layer === "inner" ? "Inner face" : "Integrated"}
+            </button>
+          ))}
+        </div>
+      </section>
       <section>
         <h3>Sensing intent</h3>
         <p className="hint">
@@ -174,7 +208,7 @@ export function CircuitPanel() {
             <button
               disabled={ui.draft.length < 2}
               onClick={() => {
-                const next = finishTrace(p, ui.draft, ui.materialId);
+                const next = finishTrace(p, ui.draft, ui.materialId, ui.activeLayer);
                 commit(next);
                 select(next.circuit?.elements.at(-1)?.id ?? null);
                 ui.set({ draft: [], tool: "select" });

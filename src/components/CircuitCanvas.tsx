@@ -19,11 +19,15 @@ export function CircuitCanvas({
     <Group>
       {(p.circuit?.elements ?? [])
         .filter((e) => ui.layers[elementLayer(e.kind)])
-        .map((e) => (
+        .map((e) => {
+          const layer = e.textileLayer ?? (e.kind === "trace" || e.kind === "insulation" ? "integrated" : "surface");
+          const active = layer === ui.activeLayer;
+          return (
           <Group
             key={e.id}
             listening={!ui.enabled || ui.tool === "select"}
-            draggable={editable}
+            draggable={editable && active}
+            opacity={active ? 1 : 0.28}
             onClick={(v) => {
               v.cancelBubble = true;
               select(e.id);
@@ -128,7 +132,7 @@ export function CircuitCanvas({
                 />
               ))}
           </Group>
-        ))}
+        );})}
       {ui.enabled && ui.draft.length > 0 && (
         <Group listening={false}>
           <Line

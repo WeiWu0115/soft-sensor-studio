@@ -54,6 +54,7 @@ export function finishTrace(
   p: Project,
   points: Point[],
   materialId = "c-yarn",
+  activeLayer: CircuitElement["textileLayer"] = "surface",
 ): Project {
   if (
     points.length < 2 ||
@@ -82,10 +83,8 @@ export function finishTrace(
       .sort((a, b) => a.distance - b.distance);
     return ranked[0];
   };
-  const start = nearest(points[0]);
-  const end = start
-    ? nearest(points.at(-1)!, start.item.textileLayer ?? "surface")
-    : nearest(points.at(-1)!);
+  const start = nearest(points[0], activeLayer);
+  const end = nearest(points.at(-1)!, start?.item.textileLayer ?? activeLayer);
   const routed = points.map((q) => ({ ...q }));
   if (start) routed[0] = start.point;
   if (end) routed[routed.length - 1] = end.point;
@@ -93,7 +92,7 @@ export function finishTrace(
   e.points = routed;
   e.fromId = start?.item.id;
   e.toId = end?.item.id;
-  e.textileLayer = start?.item.textileLayer ?? end?.item.textileLayer ?? "surface";
+  e.textileLayer = start?.item.textileLayer ?? end?.item.textileLayer ?? activeLayer;
   e.channel = start?.item.channel ?? end?.item.channel ?? "";
   return { ...p, circuit: { ...c, elements: [...c.elements, e] } };
 }

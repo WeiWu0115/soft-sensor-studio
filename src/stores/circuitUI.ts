@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { CircuitKind, Point } from "../models/circuit";
+import type { CircuitKind, Point, TextileLayer } from "../models/circuit";
 export type CircuitLayer =
   "textile" | "sensing" | "routing" | "contacts" | "insulation";
 export const useCircuitUI = create<{
@@ -7,6 +7,7 @@ export const useCircuitUI = create<{
   tool: CircuitKind | "select";
   draft: Point[];
   materialId: string;
+  activeLayer: TextileLayer;
   layers: Record<CircuitLayer, boolean>;
   set: (
     p: Partial<{
@@ -14,6 +15,7 @@ export const useCircuitUI = create<{
       tool: CircuitKind | "select";
       draft: Point[];
       materialId: string;
+      activeLayer: TextileLayer;
       layers: Record<CircuitLayer, boolean>;
     }>,
   ) => void;
@@ -22,6 +24,7 @@ export const useCircuitUI = create<{
   tool: "select",
   draft: [],
   materialId: "c-yarn",
+  activeLayer: "surface",
   layers: {
     textile: true,
     sensing: true,
