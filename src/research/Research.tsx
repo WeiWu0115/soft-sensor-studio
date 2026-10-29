@@ -39,12 +39,27 @@ function load() {
       const additions = seedData.papers.filter(
         (paper) => !knownPaperIds.has(paper.id),
       );
-      if (additions.length) {
+      const seedPaperById = new Map(
+        seedData.papers.map((paper) => [paper.id, paper]),
+      );
+      const refreshedNotes = saved.papers.filter((paper) => {
+        const seeded = seedPaperById.get(paper.id);
+        return !!seeded && seeded.notes.startsWith(paper.notes) && seeded.notes !== paper.notes;
+      }).length;
+      if (additions.length || refreshedNotes) {
         const addedIds = new Set(additions.map((paper) => paper.id));
         const merged = parseResearch(
           JSON.stringify({
             ...saved,
-            papers: [...saved.papers, ...additions],
+            papers: [
+              ...saved.papers.map((paper) => {
+                const seeded = seedPaperById.get(paper.id);
+                return seeded && seeded.notes.startsWith(paper.notes)
+                  ? { ...paper, notes: seeded.notes }
+                  : paper;
+              }),
+              ...additions,
+            ],
             screening: [
               ...saved.screening,
               ...seedData.screening.filter((record) =>
@@ -66,7 +81,7 @@ function load() {
         }
         return {
           data: merged,
-          message: `Restored local Research workspace and added ${additions.length} new seed candidate${additions.length === 1 ? "" : "s"}.`,
+          message: `Restored local Research workspace, added ${additions.length} new seed candidate${additions.length === 1 ? "" : "s"}, and refreshed ${refreshedNotes} source note${refreshedNotes === 1 ? "" : "s"}.`,
         };
       }
       return {
