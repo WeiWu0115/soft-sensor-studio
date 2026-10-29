@@ -5,7 +5,9 @@ import {stitchAt,type Operation} from './knitPatternGenerator';
 // Representative geometry only: capped independently of imported project dimensions.
 export function yarnPreviewPlan(columns:number,rows:number,repeat:KnitStructure['repeat']){
  const fit=(count:number,period:number,cap:number)=>Math.max(1,Math.min(count,Math.max(period,Math.floor(cap/period)*period)));
- const c=fit(columns,repeat.columns,96),r=fit(rows,repeat.rows,72);
+ // Keep the representative 3D preview light enough for laptops and browsers
+ // that are already running several CAD tabs.
+ const c=fit(columns,repeat.columns,48),r=fit(rows,repeat.rows,36);
  return {columns:c,rows:r,reduced:c!==columns||r!==rows};
 }
 export function yarnLoopGeometry(op:Operation,width:number,height:number){
@@ -27,8 +29,7 @@ export function yarnInstances(s:KnitStructure,columns:number,rows:number,radius:
   const op=stitchAt(s.id,c,r),theta=2*Math.PI*(c+.5)/plan.columns;
   // Rib relief follows the representative repeat, never a mechanical deformation model.
   const rib=s.category==='Rib'?(op==='P'?-.08:.16)*width:0;
-  // Keep the yarn tube visibly above the garment shell; the tube radius is
-  // about 0.34 mm at the default gauge, so a 0.35 mm offset nearly hid it.
+  // Keep the yarn tube visibly above the garment shell.
   const radial=radius+1+rib;
   const matrix=new THREE.Matrix4().makeRotationY(theta);
   matrix.setPosition(radial*Math.sin(theta),(r+.5)*courseHeight-height/2,radial*Math.cos(theta));
