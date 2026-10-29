@@ -231,7 +231,7 @@ export default function Research() {
         </a>
         <span>RESEARCH / SEED CORPUS</span>
         <a href="./">Open CAD ↗</a>
-        <a href="./showcase.html">Material Playground ↗</a>
+        <a href="./showcase.html">Pattern Playground ↗</a>
       </div>
       <div className="r-hero">
         <div>

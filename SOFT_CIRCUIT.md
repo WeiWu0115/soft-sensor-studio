@@ -12,7 +12,7 @@ Run `npm ci`, then `npm run dev`. Open **Circuit** in the existing CAD sidebar.
 6. Toggle textile, sensing, routing, contact and insulation visibility in **Visual layers**. These apply to both 2D and the cylindrical 3D sleeve. Visibility does not change checks or connectivity. These are display layers, not a verified physical stack-up.
 7. Review the schematic geometry warnings. Add fabrication assumptions and unresolved validation notes. **Show design summary** and **Download design brief** provide a readable handoff; **Save project / Open** retain the editable JSON project.
 
-All default application text is English. The existing Knit Structure Library, Material Playground, Threadlines, sensors and yarn editor remain available.
+All default application text is English. The existing Knit Structure Library, Pattern Playground, Threadlines, sensors and yarn editor remain available.
 
 ## Delivered scope
 
