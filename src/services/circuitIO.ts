@@ -33,7 +33,7 @@ export function validateCircuit(value: unknown, existingIds: Set<string>) {
       (e.textileLayer !== undefined && !["surface", "integrated", "inner"].includes(e.textileLayer)) ||
       (e.sensorId !== undefined && (!str(e.sensorId, 100) || !existingIds.has(e.sensorId))) ||
       (e.knitStructureId !== undefined && !str(e.knitStructureId, 100)) ||
-      (e.sensorTemplateVersion !== undefined && ![1, 2].includes(e.sensorTemplateVersion)) ||
+      (e.sensorTemplateVersion !== undefined && ![1, 2, 3].includes(e.sensorTemplateVersion)) ||
       !["name", "materialId", "channel", "notes"].every((k) => str(e[k])) ||
       !["column", "row"].every((k) => integer(e[k])) ||
       !["width", "height"].every((k) => integer(e[k], 1)) ||

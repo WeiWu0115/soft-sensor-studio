@@ -134,6 +134,7 @@ export function circuitChecks(p: Project): string[] {
     ...es.filter((e) => e.kind !== "trace" && e.kind !== "insulation"),
     ...p.sensors,
   ];
+  const layerOf = (element: CircuitElement) => element.textileLayer ?? (element.kind === "trace" || element.kind === "insulation" ? "integrated" : "surface");
   for (const e of es) {
     if (!e.channel && e.kind !== "insulation")
       out.push(`${e.name}: channel unassigned.`);
@@ -227,6 +228,7 @@ export function circuitChecks(p: Project): string[] {
     for (let j = i + 1; j < conductors.length; j++) {
       const a = conductors[i],
         b = conductors[j];
+      if (layerOf(a) !== layerOf(b)) continue;
       let contact = false;
       if (a.kind === "trace" && b.kind === "trace")
         contact = segments(a).some(([u, v]) =>
@@ -268,6 +270,7 @@ export function circuitChecks(p: Project): string[] {
   for (const e of conductors)
     for (const s of p.sensors) {
       if (e.sensorId === s.id) continue;
+      if (layerOf(e) !== (s.textileLayer ?? "surface")) continue;
       if (e.kind === "trace") {
         if (e.fromId === s.id || e.toId === s.id) continue;
         const cs = corners(s);
@@ -415,10 +418,10 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
   isolation.width = sensor.width + 16; isolation.height = sensor.height + 8;
   for (const element of [sensing, leftPad, rightPad, leftTerminal, rightTerminal, isolation, ...traces]) {
     element.sensorId = sensor.id;
-    element.sensorTemplateVersion = 2;
+    element.sensorTemplateVersion = 3;
     element.channel = sensor.channel;
     element.knitStructureId = sensor.knitStructureId;
-    element.textileLayer = element.kind === "trace" || element.kind === "insulation" ? "integrated" : sensor.textileLayer ?? "surface";
+    element.textileLayer = element.kind === "insulation" ? "integrated" : sensor.textileLayer ?? "surface";
   }
   const group = [leftPad, rightPad, leftTerminal, rightTerminal, sensing, isolation, ...traces];
   if (group.some((e) => {
@@ -435,7 +438,7 @@ export function syncSensorCircuit(p: Project, before: Project["sensors"][number]
   const y = sensor.row + Math.floor(sensor.height / 2), padY = y - 2, routeLane = Math.max(4, sensor.row - 8);
   const patchElement = (element: CircuitElement): CircuitElement => {
     const suffix = element.name.includes(" · ") ? element.name.slice(element.name.lastIndexOf(" · ")) : "";
-    const base = { ...element, sensorTemplateVersion: 2, name: `${sensor.name}${suffix}`, channel: sensor.channel, knitStructureId: sensor.knitStructureId };
+    const base = { ...element, sensorTemplateVersion: 3, name: `${sensor.name}${suffix}`, channel: sensor.channel, knitStructureId: sensor.knitStructureId };
     if (element.kind === "sensing-region") return { ...base, column: sensor.column, row: sensor.row, width: sensor.width, height: sensor.height, materialId: sensor.materialId, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin A")) return { ...base, column: sensor.column - 4, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin B")) return { ...base, column: sensor.column + sensor.width, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
@@ -448,7 +451,7 @@ export function syncSensorCircuit(p: Project, before: Project["sensors"][number]
         : element.name.endsWith("Contact B") ? [{ column: right + 2, row: y }, { column: right, row: y }]
         : element.name.endsWith("Lead A") ? [{ column: left - 2, row: y }, { column: left - 2, row: routeLane }, { column: left - 14, row: routeLane }]
         : [{ column: right + 2, row: y }, { column: right + 2, row: routeLane }, { column: right + 14, row: routeLane }];
-      return { ...base, points, column: points[0].column, row: points[0].row };
+      return { ...base, points, column: points[0].column, row: points[0].row, textileLayer: sensor.textileLayer ?? "surface" };
     }
     return base;
   };

@@ -49,7 +49,7 @@ export function CircuitCanvas({
                   q.column * scale,
                   (rows - q.row) * scale,
                 ])}
-                stroke={circuitColors.trace}
+                stroke={e.textileLayer === "inner" ? "#6b64a6" : e.textileLayer === "surface" ? "#b58a25" : circuitColors.trace}
                 strokeWidth={Math.max(2, e.width * scale)}
                 hitStrokeWidth={Math.max(12, e.width * scale)}
                 lineCap="round"
