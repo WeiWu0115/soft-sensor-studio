@@ -315,6 +315,24 @@
   border-radius: 9px;
   margin: 18px 0;
 }
+.research-app .r-analysis { max-width: 1500px; margin: 0 auto; }
+.research-app .r-analysis-intro, .research-app .r-analysis-note { color: #60746b; font-size: 12px; }
+.research-app .r-analysis-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+.research-app .r-analysis-summary > div { background: #173b31; border-radius: 9px; padding: 18px; color: white; display: flex; flex-direction: column; }
+.research-app .r-analysis-summary strong { font-size: 32px; line-height: 1.1; }
+.research-app .r-analysis-summary span { font-size: 12px; opacity: .85; margin-top: 6px; }
+.research-app .r-analysis-caveat { background: #f3f5e9; border-left: 3px solid #9aaf4a; padding: 12px 15px; font-size: 12px; }
+.research-app .r-analysis-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 18px; }
+.research-app .r-analysis-card h2 { margin-top: 0; }
+.research-app .r-bars { display: grid; gap: 10px; }
+.research-app .r-bar-label { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; font-size: 11px; }
+.research-app .r-bar-label span { min-width: 0; }
+.research-app .r-bar-label strong { white-space: nowrap; color: #224a40; }
+.research-app .r-bar-label small { color: #68796f; font-weight: 500; }
+.research-app .r-bar-track { height: 7px; background: #e9eee6; border-radius: 9px; overflow: hidden; }
+.research-app .r-bar-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #438976, #9aaf4a); }
+.research-app .r-analysis-findings { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.research-app .r-analysis-findings p { background: #f6f8f1; padding: 14px; border-radius: 7px; font-size: 12px; }
 .research-app .r-evidence {
   border-top: 1px solid #d9e2d5;
   padding: 12px 0;
@@ -420,6 +438,7 @@
   color: #75816d;
 }
 @media (max-width: 850px) {
+  .research-app .r-analysis-grid, .research-app .r-analysis-findings { grid-template-columns: 1fr; }
   .research-app .r-hero {
     grid-template-columns: 1fr;
     padding-top: 25px;
@@ -448,6 +467,7 @@
   }
 }
 @media (max-width: 500px) {
+  .research-app .r-analysis-summary { grid-template-columns: 1fr; }
   .research-app .r-form {
     grid-template-columns: 1fr;
   }

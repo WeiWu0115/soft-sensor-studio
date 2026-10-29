@@ -104,6 +104,7 @@ function load() {
 }
 const sections = [
   "database",
+  "analysis",
   "atlas",
   "screening",
   "requirements",
@@ -111,6 +112,7 @@ const sections = [
 ] as const;
 const titles = [
   "Paper Database",
+  "Analysis",
   "Evidence / Design Atlas",
   "Screening Workspace",
   "Knowledge-to-CAD Requirements",
@@ -519,6 +521,7 @@ export default function Research() {
             </aside>
           </div>
         )}
+        {section === "analysis" && <ReviewAnalysis data={data} />}
         {section === "atlas" && (
           <>
             <h2>Paper × authoring capability</h2>
@@ -852,6 +855,73 @@ export default function Research() {
     </div>
   );
 }
+const reviewAnalysis = {
+  sensors: [
+    ["Stretch / strain", 53, "46.5%"], ["Electrode", 27, "23.7%"],
+    ["Pressure", 20, "17.5%"], ["Piezoresistive (general)", 14, "12.3%"],
+    ["Capacitive", 11, "9.6%"], ["Force", 8, "7.0%"],
+    ["Compression / deformation", 5, "4.4%"], ["Resistance", 3, "2.6%"],
+    ["Tactile / touch (other)", 3, "2.6%"], ["Electrical impedance tomography", 1, "0.9%"], ["Distance", 1, "0.9%"],
+  ] as const,
+  applications: [
+    ["Motion / activity", 38, "33.3%"], ["Sensor development (general)", 31, "27.2%"],
+    ["Respiration", 20, "17.5%"], ["ECG", 15, "13.2%"], ["EMG", 9, "7.9%"],
+    ["Soft robotics / actuation", 7, "6.1%"], ["Non-respiratory body expansion", 5, "4.4%"],
+    ["Touch", 4, "3.5%"], ["Heart rate", 3, "2.6%"], ["Distance", 2, "1.8%"],
+    ["Grip", 2, "1.8%"], ["Posture", 2, "1.8%"], ["Interface", 2, "1.8%"],
+    ["Garment wear location", 1, "0.9%"], ["Proximity", 1, "0.9%"], ["Moisture", 1, "0.9%"],
+  ] as const,
+  machines: [["Brand and model", 62, "54.4%"], ["Type only", 21, "18.4%"], ["No machine information", 18, "15.8%"], ["Manufacturer, no model", 13, "11.4%"]] as const,
+  materials: [["Silver", 54, "58.1%"], ["Stainless steel", 17, "18.3%"], ["Carbon", 15, "16.1%"], ["Copper", 6, "6.5%"], ["Other unique material", 8, "8.6%"]] as const,
+  integration: [["Knit into full garment", 32, "28.1%"], ["Attached, not directly knit", 14, "12.3%"], ["Knit-in conductive interface traces", 1, "0.9%"], ["No garment integration", 67, "58.8%"]] as const,
+  human: [["Yes", 73, "64.0%"], ["No", 35, "30.7%"], ["Unclear", 6, "5.6%"]] as const,
+};
+function ReviewBars({ title, rows, denominator = 114, note }: {
+  title: string;
+  rows: readonly (readonly [string, number, string])[];
+  denominator?: number;
+  note?: string;
+}) {
+  const max = Math.max(...rows.map((row) => row[1]));
+  return <article className="r-card r-analysis-card">
+    <h2>{title}</h2>
+    {note && <p className="r-analysis-note">{note}</p>}
+    <div className="r-bars">
+      {rows.map(([name, count, percent]) => <div className="r-bar-row" key={name}>
+        <div className="r-bar-label"><span>{name}</span><strong>{count} <small>({percent})</small></strong></div>
+        <div className="r-bar-track" aria-label={`${name}: ${count} of ${denominator}`}><span style={{ width: `${Math.max(2, (count / max) * 100)}%` }} /></div>
+      </div>)}
+    </div>
+  </article>;
+}
+function ReviewAnalysis({ data }: { data: ResearchDataset }) {
+  const review = data.papers.find((paper) => paper.id === "hester-hofmann-machine-knit-review");
+  const source = review?.openAccessUrl ?? review?.canonicalUrl ?? "#";
+  return <section className="r-analysis">
+    <div className="r-section-head"><div><p className="r-eyebrow">REVIEW-REPORTED EVIDENCE · SEARCH THROUGH 2023-10-31</p><h2>Machine-knit sensor research, at a glance</h2></div><Source url={source}>Open review source</Source></div>
+    <p className="r-analysis-intro">Descriptive statistics transcribed from Hester &amp; Hofmann’s review. These figures represent the review’s coding; they have not been recalculated from the bibliographic records in this workspace.</p>
+    <div className="r-analysis-summary">
+      <div><strong>114</strong><span>manuscripts reported by review</span></div>
+      <div><strong>113</strong><span>distinct study reference IDs found in Appendix A</span></div>
+      <div><strong>4</strong><span>search databases through 2023-10-31</span></div>
+    </div>
+    <p className="r-analysis-caveat"><b>Coverage note.</b> The review’s abstract and conclusion report 114 manuscripts, while its Appendix A contains 113 distinct reference IDs. Charts below preserve the review’s reported denominator and counts; no missing citation is inferred. Categories can overlap, so percentages may add to more than 100%.</p>
+    <div className="r-analysis-grid">
+      <ReviewBars title="Sensor types" rows={reviewAnalysis.sensors} note="Table 1 · n = 114; multi-label classification" />
+      <ReviewBars title="Applications" rows={reviewAnalysis.applications} note="Table 2 · n = 114; multi-label classification" />
+      <ReviewBars title="Knitting machine reporting" rows={reviewAnalysis.machines} note="Section 3.2 · n = 114" />
+      <ReviewBars title="Conductive materials" rows={reviewAnalysis.materials} denominator={93} note="Section 3.3 · clear material reported for n = 93; materials may co-occur" />
+      <ReviewBars title="Garment integration" rows={reviewAnalysis.integration} note="Section 3.4 · n = 114" />
+      <ReviewBars title="Human testing" rows={reviewAnalysis.human} note="Review coding · n = 114; percentages are rounded" />
+    </div>
+    <article className="r-card r-analysis-card">
+      <h2>What the review points to</h2>
+      <div className="r-analysis-findings"><p><b>Validation needs</b><br />The authors call for stronger accuracy validation and comparison with common wearable sensors; they report no randomized controlled trials in the reviewed set.</p><p><b>Reproducibility gaps</b><br />They recommend reporting yarn composition and manufacturer, machine model and settings, gauge, and ideally knitting instructions or files.</p><p><b>Cross-disciplinary work</b><br />The review highlights opportunities to connect textile engineering with HCI, fashion, and application specialists.</p></div>
+      <p className="r-analysis-note">See the review’s discussion and future-work sections for the authors’ interpretation. These qualitative points are not independent conclusions from this project’s screening.</p>
+    </article>
+  </section>;
+}
+
 function RightsCell({
   data,
   papers,
