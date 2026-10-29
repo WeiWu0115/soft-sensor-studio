@@ -4,11 +4,28 @@ import { circuitLibrary } from "../data/softCircuitLibrary";
 import { updateCircuitElement } from "../services/circuit";
 import { NumberField } from "./Properties";
 export function CircuitProperties() {
-  const { project: p, selected, commit, remove, duplicate } = useStudio(),
+  const { project: p, selected, commit, remove, duplicate, patchSensor } = useStudio(),
     e = p.circuit?.elements.find((e) => e.id === selected);
   if (!e) return null;
-  const patch = (v: Partial<typeof e>) =>
+  const patch = (v: Partial<typeof e>) => {
+    if (e.kind === "sensing-region" && e.sensorId) {
+      const sensor = p.sensors.find((item) => item.id === e.sensorId);
+      if (sensor) {
+        patchSensor(sensor.id, {
+          ...(v.name !== undefined ? { name: v.name.replace(" · Sensing element", "") } : {}),
+          ...(v.column !== undefined ? { column: v.column } : {}),
+          ...(v.row !== undefined ? { row: v.row } : {}),
+          ...(v.width !== undefined ? { width: v.width } : {}),
+          ...(v.height !== undefined ? { height: v.height } : {}),
+          ...(v.materialId !== undefined ? { materialId: v.materialId } : {}),
+          ...(v.textileLayer !== undefined ? { textileLayer: v.textileLayer } : {}),
+          ...(v.knitStructureId !== undefined ? { knitStructureId: v.knitStructureId } : {}),
+        });
+        return;
+      }
+    }
     commit(updateCircuitElement(p, e.id, v));
+  };
   const targets = [
     ...p.sensors,
     ...p.circuit!.elements.filter(
@@ -62,6 +79,17 @@ export function CircuitProperties() {
             placeholder="e.g. CH-01"
             onChange={(v) => patch({ channel: v.target.value })}
           />
+        </label>
+        <label className="field">
+          Textile layer
+          <select
+            value={e.textileLayer ?? (e.kind === "trace" || e.kind === "insulation" ? "integrated" : "surface")}
+            onChange={(v) => patch({ textileLayer: v.target.value as "surface" | "integrated" | "inner" })}
+          >
+            <option value="surface">Surface</option>
+            <option value="integrated">Integrated in fabric</option>
+            <option value="inner">Inner face</option>
+          </select>
         </label>
         {e.kind === "trace" ? (
           <>

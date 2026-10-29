@@ -1,8 +1,8 @@
-import type {CircuitDesign} from './circuit';
+import type {CircuitDesign,TextileLayer} from './circuit';
 export type Joint = 'Knee' | 'Elbow' | 'Wrist';
 export interface Garment { joint: Joint; circumferenceMm: number; lengthMm: number; stitchWidthMm: number; rowHeightMm: number }
 export interface Material { id: string; name: string; yarnType: string; notes: string; calibrated: boolean }
-export interface Sensor { id: string; name: string; column: number; row: number; width: number; height: number; materialId: string; structure: string; channel: string; color: string }
+export interface Sensor { id: string; name: string; column: number; row: number; width: number; height: number; materialId: string; structure: string; knitStructureId?: string; textileLayer?: TextileLayer; channel: string; color: string }
 export interface Project { schemaVersion: 1; circuit?: CircuitDesign; knitStructureId?: string; name: string; garment: Garment; sensors: Sensor[]; materials: Material[]; baseMaterialId: string; structure: string }
 export const presets: Record<Joint, [number,number]> = { Knee:[360,240], Elbow:[260,180], Wrist:[170,100] };
 export const colors = ['#bd6746','#497b74','#8b79ad','#c49b42','#587caa'];

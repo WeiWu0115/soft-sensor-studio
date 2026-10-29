@@ -9,7 +9,7 @@ import {
 } from "../models/circuit";
 import { circuitLibrary } from "../data/softCircuitLibrary";
 import {
-  applyCompleteCircuitTemplate,
+  applySensorCircuitTemplate,
   finishTrace,
   designSummary,
 } from "../services/circuit";
@@ -17,6 +17,8 @@ export function CircuitPanel() {
   const { project: p, commit, select, selected } = useStudio(),
     ui = useCircuitUI(),
     c = p.circuit ?? emptyCircuit(p.garment.joint);
+  const selectedSensor = p.sensors.find((sensor) => sensor.id === selected);
+  const sensorHasCircuit = selectedSensor && c.elements.some((element) => element.sensorId === selectedSensor.id);
   const [category, setCategory] = useState("All"),
     [summary, setSummary] = useState(false);
   const update = (patch: Partial<typeof c>) =>
@@ -105,20 +107,21 @@ export function CircuitPanel() {
           measurements. Use Design to set sleeve dimensions.
         </p>
         <button
-          disabled={c.elements.length > 190 || c.elements.some((element) => element.name === "Readout terminal A")}
+          disabled={!selectedSensor || !!sensorHasCircuit || c.elements.length > 190}
           onClick={() => {
-            const next = applyCompleteCircuitTemplate(p);
+            if (!selectedSensor) return;
+            const next = applySensorCircuitTemplate(p, selectedSensor);
             commit(next);
             select(next.circuit?.elements.at(-1)?.id ?? null);
             ui.set({ enabled: true, tool: "select", draft: [] });
           }}
         >
-          Add two-terminal circuit template
+          Add pins and traces to selected sensor
         </button>
         <p className="hint">
-          Adds a sensing element, two contacts, two readout terminals and
-          explicitly assigned traces as one editable textile layout. External
-          readout electronics and electrical behavior are not modeled.
+          Creates two contact pins, two readout terminals and assigned lead
+          traces for the selected sensor. External readout electronics and
+          electrical behavior are not modeled.
         </p>
       </section>
       <section>

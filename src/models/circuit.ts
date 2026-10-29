@@ -6,6 +6,7 @@ export const circuitKinds = [
   "insulation",
 ] as const;
 export type CircuitKind = (typeof circuitKinds)[number];
+export type TextileLayer = "surface" | "integrated" | "inner";
 export type Point = { column: number; row: number };
 export interface CircuitElement {
   id: string;
@@ -21,6 +22,9 @@ export interface CircuitElement {
   fromId?: string;
   toId?: string;
   notes: string;
+  textileLayer?: TextileLayer;
+  sensorId?: string;
+  knitStructureId?: string;
 }
 export interface CircuitDesign {
   version: 1;

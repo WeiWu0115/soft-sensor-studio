@@ -11,6 +11,7 @@ export function Circuit3D({ offset }: { offset: number }) {
   const meshes = useMemo(
     () =>
       elements.map((e) => {
+        const layerOffset = e.textileLayer === "inner" ? -1.2 : e.textileLayer === "integrated" ? -0.5 : 0.7;
         if (e.kind === "trace") {
           const path = new THREE.CurvePath<THREE.Vector3>();
           for (let j = 1; j < e.points.length; j++) {
@@ -27,7 +28,7 @@ export function Circuit3D({ offset }: { offset: number }) {
                     a.column + (b.column - a.column) * t,
                     a.row + (b.row - a.row) * t,
                     p.garment,
-                    offset + 1,
+                    offset + layerOffset,
                   ),
                 );
               path.add(new THREE.LineCurve3(q(k / steps), q((k + 1) / steps)));
@@ -55,7 +56,7 @@ export function Circuit3D({ offset }: { offset: number }) {
                 e.column + (e.width * i) / steps,
                 r,
                 p.garment,
-                offset + (e.kind === "insulation" ? 0.1 : 0.7),
+                offset + layerOffset,
               ),
             );
         for (let i = 0; i < steps; i++) {

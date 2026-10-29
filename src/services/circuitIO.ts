@@ -30,6 +30,9 @@ export function validateCircuit(value: unknown, existingIds: Set<string>) {
       !e.id ||
       ids.has(e.id) ||
       !circuitKinds.includes(e.kind) ||
+      (e.textileLayer !== undefined && !["surface", "integrated", "inner"].includes(e.textileLayer)) ||
+      (e.sensorId !== undefined && (!str(e.sensorId, 100) || !existingIds.has(e.sensorId))) ||
+      (e.knitStructureId !== undefined && !str(e.knitStructureId, 100)) ||
       !["name", "materialId", "channel", "notes"].every((k) => str(e[k])) ||
       !["column", "row"].every((k) => integer(e[k])) ||
       !["width", "height"].every((k) => integer(e[k], 1)) ||
