@@ -483,7 +483,34 @@ export function syncSensorCircuit(p: Project, before: Project["sensors"][number]
     }
     return base;
   };
-  return { ...p, circuit: { ...p.circuit, elements: p.circuit.elements.map((element) => element.sensorId === sensor.id ? patchElement(element) : element) } };
+  const previous = p.circuit.elements;
+  const elements = previous.map((element) =>
+    element.sensorId === sensor.id ? patchElement(element) : element,
+  );
+  const moved = new Map(
+    elements
+      .filter((element) => element.sensorId === sensor.id)
+      .map((element) => {
+        const before = previous.find((item) => item.id === element.id)!;
+        return [element.id, { dx: element.column - before.column, dy: element.row - before.row }] as const;
+      }),
+  );
+  const routed = elements.map((element) => {
+    if (element.kind !== "trace" || element.sensorId === sensor.id) return element;
+    const points = element.points.map((point) => ({ ...point }));
+    const start = moved.get(element.fromId ?? "");
+    const end = moved.get(element.toId ?? "");
+    if (start && points.length) {
+      points[0].column += start.dx;
+      points[0].row += start.dy;
+    }
+    if (end && points.length) {
+      points[points.length - 1].column += end.dx;
+      points[points.length - 1].row += end.dy;
+    }
+    return { ...element, points, column: points[0]?.column ?? element.column, row: points[0]?.row ?? element.row };
+  });
+  return { ...p, circuit: { ...p.circuit, elements: routed } };
 }
 export function designSummary(p: Project) {
   const c = p.circuit ?? emptyCircuit(p.garment.joint);
