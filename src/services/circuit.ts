@@ -442,8 +442,8 @@ export function syncSensorCircuit(p: Project, before: Project["sensors"][number]
     if (element.kind === "sensing-region") return { ...base, column: sensor.column, row: sensor.row, width: sensor.width, height: sensor.height, materialId: sensor.materialId, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin A")) return { ...base, column: sensor.column - 4, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "electrode" && element.name.endsWith("Pin B")) return { ...base, column: sensor.column + sensor.width, row: padY, textileLayer: sensor.textileLayer ?? "surface" };
-    if (element.kind === "terminal" && element.name.endsWith("Readout A")) return { ...base, column: sensor.column - 16, row: routeLane - 2 };
-    if (element.kind === "terminal" && element.name.endsWith("Readout B")) return { ...base, column: sensor.column + sensor.width + 12, row: routeLane - 2 };
+    if (element.kind === "terminal" && element.name.endsWith("Readout A")) return { ...base, column: sensor.column - 16, row: routeLane - 2, textileLayer: sensor.textileLayer ?? "surface" };
+    if (element.kind === "terminal" && element.name.endsWith("Readout B")) return { ...base, column: sensor.column + sensor.width + 12, row: routeLane - 2, textileLayer: sensor.textileLayer ?? "surface" };
     if (element.kind === "insulation") return { ...base, column: sensor.column - 8, row: sensor.row - 4, width: sensor.width + 16, height: sensor.height + 8 };
     if (element.kind === "trace") {
       const left = sensor.column, right = sensor.column + sensor.width;
