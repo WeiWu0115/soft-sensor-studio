@@ -182,6 +182,7 @@ export function CircuitPanel() {
                   draft: [],
                   materialId: {
                     trace: "c-yarn",
+                    battery: "battery-pack",
                     electrode: "c-fabric",
                     terminal: "connector",
                     insulation: "dielectric",

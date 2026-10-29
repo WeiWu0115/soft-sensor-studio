@@ -2,7 +2,7 @@ import { Group, Line, Rect, Circle, Text } from "react-konva";
 import { useStudio } from "../stores/studio";
 import { useCircuitUI, elementLayer } from "../stores/circuitUI";
 import { circuitColors } from "../models/circuit";
-import { updateCircuitElement, translateElement } from "../services/circuit";
+import { updateCircuitElement, translateElement, translateBatteryAssembly } from "../services/circuit";
 export function CircuitCanvas({
   scale,
   rows,
@@ -62,6 +62,10 @@ export function CircuitCanvas({
                   return;
                 }
               }
+              if (e.kind === "battery") {
+                commit(translateBatteryAssembly(p, e.id, dx, dy));
+                return;
+              }
               commit(
                 updateCircuitElement(p, e.id, translateElement(e, dx, dy)),
               );
@@ -94,6 +98,21 @@ export function CircuitCanvas({
                 dash={e.kind === "insulation" ? [5, 3] : undefined}
                 cornerRadius={e.kind === "terminal" ? 2 : 0}
               />
+            )}
+            {e.kind === "battery" && (
+              <>
+                <Rect
+                  listening={false}
+                  x={(e.column + 1) * scale}
+                  y={(rows - e.row - e.height + 1) * scale}
+                  width={Math.max(1, (e.width - 2) * scale)}
+                  height={Math.max(1, (e.height - 2) * scale)}
+                  stroke="#e9eee6"
+                  strokeWidth={1}
+                  cornerRadius={2}
+                />
+                <Text listening={false} x={(e.column + 3) * scale} y={(rows - e.row - 5) * scale} text="CELL" fontSize={Math.max(7, Math.min(10, 8 * scale))} fill="#f4f4eb" />
+              </>
             )}
             <Text
               listening={false}

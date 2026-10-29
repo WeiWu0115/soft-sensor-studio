@@ -1,4 +1,5 @@
 export const circuitKinds = [
+  "battery",
   "sensing-region",
   "trace",
   "electrode",
@@ -24,6 +25,7 @@ export interface CircuitElement {
   notes: string;
   textileLayer?: TextileLayer;
   sensorId?: string;
+  batteryId?: string;
   knitStructureId?: string;
   sensorTemplateVersion?: number;
 }
@@ -44,6 +46,7 @@ export const emptyCircuit = (bodyLocation = "Knee"): CircuitDesign => ({
     "Requires fabrication review, electrical continuity and isolation tests, calibration, repeatability, hysteresis, wear and skin-contact assessment. No clinical performance claims.",
 });
 export const kindLabel: Record<CircuitKind, string> = {
+  battery: "Battery position",
   "sensing-region": "Sensing Region",
   trace: "Conductive Trace",
   electrode: "Electrode / Contact Pad",
@@ -51,6 +54,7 @@ export const kindLabel: Record<CircuitKind, string> = {
   insulation: "Insulation Region",
 };
 export const circuitColors: Record<CircuitKind, string> = {
+  battery: "#526c54",
   "sensing-region": "#b66547",
   trace: "#b58a25",
   electrode: "#467f86",

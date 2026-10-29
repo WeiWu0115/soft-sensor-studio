@@ -10,6 +10,15 @@ export interface CircuitProfile {
 }
 export const circuitLibrary: CircuitProfile[] = [
   {
+    id: "battery-pack",
+    name: "Battery pack location — concept",
+    category: "Power source",
+    kind: "battery",
+    conductive: false,
+    description: "A reserved placement block with VBAT+ and GND− terminals.",
+    consideration: "This is a layout placeholder. Battery chemistry, voltage, protection, enclosure and power routing are not modeled.",
+  },
+  {
     id: "c-yarn",
     name: "Conductive yarn — generic",
     category: "Conductive yarn",

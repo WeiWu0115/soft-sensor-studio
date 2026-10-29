@@ -21,6 +21,9 @@ export function createCircuitElement(
     channel: "",
     ...point,
     width:
+      kind === "battery"
+        ? 14
+        :
       kind === "trace"
         ? 1
         : kind === "sensing-region"
@@ -28,11 +31,33 @@ export function createCircuitElement(
           : kind === "insulation"
             ? 16
             : 4,
-    height: kind === "sensing-region" ? 24 : kind === "insulation" ? 28 : 4,
+    height: kind === "battery" ? 8 : kind === "sensing-region" ? 24 : kind === "insulation" ? 28 : 4,
     points: [],
     notes: "",
     textileLayer: kind === "trace" || kind === "insulation" ? "integrated" : "surface",
   };
+}
+export function addBatteryAssembly(
+  p: Project,
+  point: Point,
+  layer: CircuitElement["textileLayer"] = "surface",
+): Project {
+  const c = p.circuit ?? emptyCircuit(p.garment.joint);
+  if (c.elements.length > 196) return p;
+  const battery = createCircuitElement("battery", point, "battery-pack");
+  battery.name = "Battery pack";
+  battery.textileLayer = layer;
+  const plus = createCircuitElement("terminal", { column: point.column - 2, row: point.row + 3 }, "connector");
+  plus.name = "Battery · VBAT+";
+  plus.channel = "VBAT+";
+  plus.batteryId = battery.id;
+  plus.textileLayer = layer;
+  const ground = createCircuitElement("terminal", { column: point.column + battery.width, row: point.row + 3 }, "connector");
+  ground.name = "Battery · GND−";
+  ground.channel = "GND−";
+  ground.batteryId = battery.id;
+  ground.textileLayer = layer;
+  return { ...p, circuit: { ...c, elements: [...c.elements, battery, plus, ground] } };
 }
 export function updateCircuitElement(
   p: Project,
@@ -531,5 +556,26 @@ export function translateElement(
   )
     ? e
     : moved;
+}
+export function translateBatteryAssembly(p: Project, batteryId: string, dx: number, dy: number): Project {
+  const c = p.circuit;
+  if (!c) return p;
+  const members = new Set([batteryId, ...c.elements.filter((e) => e.batteryId === batteryId).map((e) => e.id)]);
+  const moved = c.elements.map((e) => members.has(e.id) ? translateElement(e, dx, dy) : e);
+  const deltas = new Map(moved.filter((e) => members.has(e.id)).map((e) => {
+    const old = c.elements.find((item) => item.id === e.id)!;
+    return [e.id, { dx: e.column - old.column, dy: e.row - old.row }] as const;
+  }));
+  const elements = moved.map((e) => {
+    if (e.kind !== "trace") return e;
+    const start = deltas.get(e.fromId ?? ""), end = deltas.get(e.toId ?? "");
+    if (!start && !end) return e;
+    const points = e.points.map((q, i) => ({
+      column: q.column + (i === 0 ? start?.dx ?? 0 : i === e.points.length - 1 ? end?.dx ?? 0 : 0),
+      row: q.row + (i === 0 ? start?.dy ?? 0 : i === e.points.length - 1 ? end?.dy ?? 0 : 0),
+    }));
+    return { ...e, points, column: points[0]?.column ?? e.column, row: points[0]?.row ?? e.row };
+  });
+  return { ...p, circuit: { ...c, elements } };
 }
 export { padDistance };
