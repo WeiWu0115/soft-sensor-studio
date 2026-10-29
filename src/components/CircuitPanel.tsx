@@ -21,6 +21,30 @@ export function CircuitPanel() {
     [summary, setSummary] = useState(false);
   const update = (patch: Partial<typeof c>) =>
     commit({ ...p, circuit: { ...c, ...patch } });
+  const selectedElement = c.elements.find((element) => element.id === selected);
+  const useProfile = (profile: (typeof circuitLibrary)[number]) => {
+    if (selectedElement && selectedElement.kind === profile.kind) {
+      commit({
+        ...p,
+        circuit: {
+          ...c,
+          elements: c.elements.map((element) =>
+            element.id === selectedElement.id
+              ? { ...element, materialId: profile.id }
+              : element,
+          ),
+        },
+      });
+      ui.set({ enabled: true, tool: "select", materialId: profile.id, draft: [] });
+      return;
+    }
+    ui.set({
+      enabled: true,
+      tool: profile.kind ?? "select",
+      materialId: profile.id,
+      draft: [],
+    });
+  };
   const download = () => {
     const url = URL.createObjectURL(
         new Blob([designSummary(p)], { type: "text/plain" }),
@@ -201,7 +225,9 @@ export function CircuitPanel() {
       <section>
         <h3>Soft Circuit Library</h3>
         <p className="hint">
-          Generic, unmeasured concept profiles. No vendor, medical or
+          Select a matching circuit object to link a profile directly. With no
+          matching object selected, it becomes the default for your next draw.
+          Profiles are generic and unmeasured, with no vendor, medical or
           fabrication certification.
         </p>
         <label className="field">
@@ -225,16 +251,26 @@ export function CircuitPanel() {
               <p>{m.description}</p>
               <p className="hint">{m.consideration}</p>
               <button
-                onClick={() =>
-                  ui.set({
-                    enabled: true,
-                    tool: m.kind ?? "select",
-                    materialId: m.id,
-                    draft: [],
-                  })
+                className={
+                  selectedElement && selectedElement.kind === m.kind &&
+                  selectedElement.materialId === m.id
+                    ? "active"
+                    : ""
                 }
+                aria-pressed={
+                  selectedElement && selectedElement.kind === m.kind
+                    ? selectedElement.materialId === m.id
+                    : ui.materialId === m.id
+                }
+                onClick={() => useProfile(m)}
               >
-                Use profile / draw
+                {selectedElement && selectedElement.kind === m.kind
+                  ? selectedElement.materialId === m.id
+                    ? "Linked to selected object"
+                    : "Link to selected object"
+                  : ui.materialId === m.id
+                    ? "Selected for next draw"
+                    : "Use for next draw"}
               </button>
             </article>
           ))}
