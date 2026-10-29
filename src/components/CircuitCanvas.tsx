@@ -22,6 +22,16 @@ export function CircuitCanvas({
         .map((e) => {
           const layer = e.textileLayer ?? (e.kind === "trace" || e.kind === "insulation" ? "integrated" : "surface");
           const active = layer === ui.activeLayer;
+          const suffix = e.name.split(" · ").at(-1) ?? e.name;
+          const label = e.kind === "trace" || e.kind === "insulation"
+            ? selected === e.id ? suffix : ""
+            : e.kind === "terminal"
+              ? suffix.replace("Readout ", "R-")
+              : e.kind === "electrode"
+                ? suffix.replace("Pin ", "")
+                : e.kind === "sensing-region" && e.sensorId
+                  ? e.name.split(" · ")[0]
+                  : e.name;
           return (
           <Group
             key={e.id}
@@ -94,7 +104,7 @@ export function CircuitCanvas({
                   scale -
                 13
               }
-              text={e.name}
+              text={label}
               fontSize={9}
               fill="#394b3e"
             />
