@@ -1,0 +1,1048 @@
+{
+  "schemaVersion": 1,
+  "protocolVersion": "1.0",
+  "searchWindow": {
+    "from": "2010-01-01",
+    "to": "2026-10-28"
+  },
+  "papers": [
+    {
+      "id": "knitui",
+      "title": "KnitUI: Fabricating Interactive and Sensing Textiles with Machine Knitting",
+      "authors": [
+        "Yiyue Luo",
+        "Kui Wu",
+        "Tomás Palacios",
+        "Wojciech Matusik"
+      ],
+      "year": 2021,
+      "venue": "Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "knitui"
+      ],
+      "topics": [
+        "Knitted sensing"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://api.crossref.org/works/10.1145/3411764.3445780",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        },
+        {
+          "url": "https://knitui.csail.mit.edu/",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Seed candidate; eligibility and full-text coding remain pending.",
+      "canonicalUrl": "https://api.crossref.org/works/10.1145/3411764.3445780",
+      "doi": "10.1145/3411764.3445780"
+    },
+    {
+      "id": "loopsense",
+      "title": "Loopsense: low-scale, unobtrusive, and minimally invasive knitted force sensors for multi-modal input, enabled by selective loop-meshing",
+      "authors": [
+        "Roland Aigner",
+        "Mira Alida Haberfellner",
+        "Michael Haller"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "loopsense"
+      ],
+      "topics": [
+        "Knitted sensing"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://api.crossref.org/works/10.1145/3613904.3642528",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Seed candidate; eligibility and full-text coding remain pending.",
+      "canonicalUrl": "https://api.crossref.org/works/10.1145/3613904.3642528",
+      "doi": "10.1145/3613904.3642528"
+    },
+    {
+      "id": "sensorknits",
+      "title": "SensorKnits: Architecting textile sensors with machine knitting",
+      "authors": [],
+      "year": null,
+      "venue": null,
+      "publicationType": "project_page",
+      "keywords": [
+        "sensorknits"
+      ],
+      "topics": [
+        "Knitted sensing"
+      ],
+      "verificationStatus": "partially_verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://www.media.mit.edu/projects/sensorknits/overview/",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Institutional project page verified. Publication tab lists SensorKnit (singular); article bibliography unresolved. Project credits are not treated as a paper author list.",
+      "canonicalUrl": "https://www.media.mit.edu/projects/sensorknits/overview/"
+    },
+    {
+      "id": "luxknit",
+      "title": "LuxKnit: Fabricating Interactive Display Textiles Integrated with Sensing by Machine Knitting",
+      "authors": [
+        "Tongyan Wang",
+        "Mohan Chi",
+        "Yue Yu",
+        "Kedi Yan",
+        "Mo Li",
+        "Yiyue Luo",
+        "Rua Mae Williams"
+      ],
+      "year": 2025,
+      "venue": "Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "luxknit"
+      ],
+      "topics": [
+        "Knitted sensing",
+        "Display textiles"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://api.crossref.org/works/10.1145/3706598.3713860",
+          "checkDate": "2026-10-29",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "doi",
+            "publicationType"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-29",
+      "notes": "Bibliographic fields checked against the exact Crossref DOI record. Full-text screening and detailed evidence coding remain pending.",
+      "doi": "10.1145/3706598.3713860",
+      "canonicalUrl": "https://doi.org/10.1145/3706598.3713860"
+    },
+    {
+      "id": "adacad",
+      "title": "AdaCAD: Parametric Design as a New Form of Notation for Complex Weaving",
+      "authors": [
+        "Laura Devendorf",
+        "Kathryn Walters",
+        "Marianne Fairbanks",
+        "Etta Sandry",
+        "Emma R Goodwill"
+      ],
+      "year": 2023,
+      "venue": "Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "adacad"
+      ],
+      "topics": [
+        "Authoring tools"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://docs.adacad.org/docs/about/research/",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Selected the 2023 parametric-design paper from the official project bibliography. Earlier AdaCAD publications are separate works, not merged.",
+      "canonicalUrl": "https://docs.adacad.org/docs/about/research/",
+      "doi": "10.1145/3544548.3581571"
+    },
+    {
+      "id": "sketch-stitch",
+      "title": "Sketch&Stitch: Interactive Embroidery for E-Textiles",
+      "authors": [
+        "Nur Al-huda Hamdan",
+        "Simon Voelker",
+        "Jan Borchers"
+      ],
+      "year": 2018,
+      "venue": "Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "sketch-stitch"
+      ],
+      "topics": [
+        "Authoring tools"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://hci.rwth-aachen.de/publications/hamdan2018a.pdf",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title"
+          ]
+        },
+        {
+          "url": "https://hci.rwth-aachen.de/sketchstitch",
+          "checkDate": "2026-10-29",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-29",
+      "notes": "Institutional publication list verifies title, complete authors, venue and year. DOI is left unknown until checked. Full-text screening pending.",
+      "canonicalUrl": "https://hci.rwth-aachen.de/sketchstitch"
+    },
+    {
+      "id": "embr",
+      "title": "Embr: A Creative Framework for Hand Embroidered Liquid Crystal Textile Displays",
+      "authors": [
+        "Shreyosi Endow",
+        "Mohammad Abu Nasir Rakib",
+        "Anvay Srivastava",
+        "Sara Rastegarpouyani",
+        "Cesar Torres"
+      ],
+      "year": 2022,
+      "venue": "CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "embr"
+      ],
+      "topics": [
+        "Display textiles",
+        "Authoring tools"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://mavmatrix.uta.edu/utalibraries_acmoapubs/79/",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType"
+          ]
+        },
+        {
+          "url": "https://hybridatelier.uta.edu/projects/62-embr",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "venue"
+          ]
+        },
+        {
+          "url": "https://api.crossref.org/works/10.1145/3491102.3502117",
+          "checkDate": "2026-10-29",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "doi",
+            "publicationType"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-29",
+      "notes": "Bibliographic fields checked against the exact Crossref DOI record. Full-text screening and detailed evidence coding remain pending.",
+      "canonicalUrl": "https://doi.org/10.1145/3491102.3502117",
+      "doi": "10.1145/3491102.3502117"
+    },
+    {
+      "id": "knitting-skeletons",
+      "title": "Knitting Skeletons: A Computer-Aided Design Tool for Shaping and Patterning of Knitted Garments",
+      "authors": [
+        "Alexandre Kaspar",
+        "Liane Makatura",
+        "Wojciech Matusik"
+      ],
+      "year": 2019,
+      "venue": "arXiv (preprint)",
+      "publicationType": "preprint",
+      "keywords": [
+        "knitting-skeletons"
+      ],
+      "topics": [
+        "Authoring tools"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://arxiv.org/abs/1904.05681",
+          "checkDate": "2026-10-29",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "doi",
+            "publicationType"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-29",
+      "notes": "Preprint bibliography checked directly against arXiv. This DOI identifies the preprint, not a peer-reviewed final publication; version reconciliation remains pending.",
+      "canonicalUrl": "https://arxiv.org/abs/1904.05681",
+      "doi": "10.48550/arXiv.1904.05681"
+    },
+    {
+      "id": "mediknit",
+      "title": "MediKnit: Soft Medical Making for Personalized and Clinician-Designed Wearable Devices for Hand Edema",
+      "authors": [
+        "Heather Kim",
+        "Narjes Pourjafarian",
+        "Arhan Choudhury",
+        "Joan Stilling",
+        "Cindy Hsin-Liu Kao"
+      ],
+      "year": 2024,
+      "venue": "Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies",
+      "publicationType": "journal",
+      "keywords": [
+        "mediknit"
+      ],
+      "topics": [
+        "Clinical co-design"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://www.hybridbody.human.cornell.edu/mediknit",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Institutional title, authors, venue and year checked; DOI is the institutional publication link (ACM retrieval returned 403). Screening remains pending.",
+      "canonicalUrl": "https://www.hybridbody.human.cornell.edu/mediknit",
+      "doi": "10.1145/3678504"
+    },
+    {
+      "id": "edemaflex",
+      "title": "EdemaFlex: textile-based soft-robotic platform toward personalized hand edema therapy",
+      "authors": [
+        "Seonyoung Youn",
+        "Arhan Choudhury",
+        "Pin-Sung Ku",
+        "Wenyi Fu",
+        "Margaret Tsai",
+        "Mahika Rathod",
+        "Alyssa Pelak",
+        "Joan Stilling",
+        "Hsin-Liu (Cindy) Kao"
+      ],
+      "year": 2026,
+      "venue": "npj Flexible Electronics",
+      "publicationType": "journal",
+      "keywords": [
+        "edemaflex"
+      ],
+      "topics": [
+        "Clinical co-design"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://www.nature.com/articles/s41528-025-00504-6",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Publisher lists publication on 24 February 2026; DOI suffix 025 is not the publication year. Feasibility study does not establish clinical efficacy.",
+      "canonicalUrl": "https://www.nature.com/articles/s41528-025-00504-6",
+      "doi": "10.1038/s41528-025-00504-6"
+    },
+    {
+      "id": "upper-limb-biofeedback",
+      "title": "A Smart Textile Biofeedback Training System for Upper Limb Rehabilitation After Stroke: Co-Design Development and Evaluation Study",
+      "authors": [
+        "Maria Munoz-Novoa",
+        "Li Guo",
+        "Anna Björkquist",
+        "Morten B Kristoffersen",
+        "Peiman Khorramshahi",
+        "Leif Sandsjö",
+        "Margit Alt Murphy"
+      ],
+      "year": 2026,
+      "venue": "JMIR Rehabilitation and Assistive Technologies",
+      "publicationType": "journal",
+      "keywords": [
+        "upper-limb-biofeedback"
+      ],
+      "topics": [
+        "Clinical co-design"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://rehab.jmir.org/2026/1/e77999/",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Publisher article and citation checked. Published 13 April 2026; earlier preprint is a separate version. Usability findings are not evidence of treatment efficacy.",
+      "canonicalUrl": "https://rehab.jmir.org/2026/1/e77999/",
+      "doi": "10.2196/77999"
+    },
+    {
+      "id": "pneuact",
+      "title": "Digital Fabrication of Pneumatic Actuators with Integrated Sensing by Machine Knitting",
+      "authors": [
+        "Yiyue Luo",
+        "Kui Wu",
+        "Andrew Spielberg",
+        "Michael Foshey",
+        "Daniela Rus",
+        "Tomás Palacios",
+        "Wojciech Matusik"
+      ],
+      "year": 2022,
+      "venue": "CHI Conference on Human Factors in Computing Systems",
+      "publicationType": "conference",
+      "keywords": [
+        "pneuact"
+      ],
+      "topics": [
+        "Knitted sensing",
+        "Soft actuation"
+      ],
+      "verificationStatus": "verified",
+      "verifiedAgainst": [
+        {
+          "url": "https://pneuact.csail.mit.edu/file/CHI2022.pdf",
+          "checkDate": "2026-10-28",
+          "fields": [
+            "title",
+            "authors",
+            "year",
+            "venue",
+            "publicationType",
+            "doi"
+          ]
+        }
+      ],
+      "provenance": "seed",
+      "dateAdded": "2026-10-28",
+      "updatedAt": "2026-10-28",
+      "notes": "Bibliography checked against paper first-page citation; author order follows that citation rather than project-page layout.",
+      "canonicalUrl": "https://pneuact.csail.mit.edu/file/CHI2022.pdf",
+      "doi": "10.1145/3491102.3517577"
+    }
+  ],
+  "screening": [],
+  "coding": [
+    {
+      "id": "seed-knitui",
+      "paperId": "knitui",
+      "reviewerId": "seed-source-notes",
+      "codebookVersion": "1.0",
+      "status": "in_progress",
+      "fabricationMethods": [
+        "knit"
+      ],
+      "sensorModalities": [],
+      "representations": [],
+      "authoringCapabilities": [
+        "placement"
+      ],
+      "targetRoles": [],
+      "evaluationMethods": [],
+      "fabricationMaturity": "unknown",
+      "designRights": [],
+      "claims": [
+        {
+          "text": "The interface lets users adjust sensing-area position and shape.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Project page: Abstract",
+          "sourceUrl": "https://knitui.csail.mit.edu/",
+          "capability": "placement"
+        }
+      ],
+      "limitations": [
+        "Preliminary source-level note; full-text coding and independent review pending."
+      ],
+      "relevanceToStudio": "A workflow comparison, not validated design guidance.",
+      "proposedFeatureIds": [],
+      "updatedAt": "2026-10-28"
+    },
+    {
+      "id": "seed-adacad",
+      "paperId": "adacad",
+      "reviewerId": "seed-source-notes",
+      "codebookVersion": "1.0",
+      "status": "in_progress",
+      "fabricationMethods": [
+        "weave"
+      ],
+      "sensorModalities": [],
+      "representations": [],
+      "authoringCapabilities": [
+        "structure_editing"
+      ],
+      "targetRoles": [],
+      "evaluationMethods": [],
+      "fabricationMaturity": "unknown",
+      "designRights": [],
+      "claims": [
+        {
+          "text": "The project bibliography describes parametric notation for weaving.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Original Projects: CHI 2023",
+          "sourceUrl": "https://docs.adacad.org/docs/about/research/",
+          "capability": "structure_editing"
+        }
+      ],
+      "limitations": [
+        "Preliminary source-level note; full-text coding and independent review pending."
+      ],
+      "relevanceToStudio": "A workflow comparison, not validated design guidance.",
+      "proposedFeatureIds": [],
+      "updatedAt": "2026-10-28"
+    },
+    {
+      "id": "seed-mediknit",
+      "paperId": "mediknit",
+      "reviewerId": "seed-source-notes",
+      "codebookVersion": "1.0",
+      "status": "in_progress",
+      "fabricationMethods": [
+        "knit"
+      ],
+      "sensorModalities": [],
+      "representations": [],
+      "authoringCapabilities": [
+        "geometry"
+      ],
+      "targetRoles": [
+        "clinician"
+      ],
+      "evaluationMethods": [],
+      "fabricationMaturity": "unknown",
+      "designRights": [
+        {
+          "role": "clinician",
+          "decisionType": "geometry",
+          "permission": "edit",
+          "evidenceNote": "Therapists adjust the template and SMA channels in the design tool.",
+          "locator": "Design tool caption",
+          "sourceUrl": "https://www.hybridbody.human.cornell.edu/mediknit"
+        }
+      ],
+      "claims": [
+        {
+          "text": "Therapists can adjust the glove template and actuator channels.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Design tool caption",
+          "sourceUrl": "https://www.hybridbody.human.cornell.edu/mediknit",
+          "capability": "geometry"
+        }
+      ],
+      "limitations": [
+        "Preliminary source-level note; full-text coding and independent review pending."
+      ],
+      "relevanceToStudio": "A workflow comparison, not validated design guidance.",
+      "proposedFeatureIds": [],
+      "updatedAt": "2026-10-28"
+    },
+    {
+      "id": "seed-embr",
+      "paperId": "embr",
+      "reviewerId": "seed-source-notes",
+      "codebookVersion": "1.0",
+      "status": "in_progress",
+      "fabricationMethods": [
+        "embroider"
+      ],
+      "sensorModalities": [],
+      "representations": [],
+      "authoringCapabilities": [
+        "simulation"
+      ],
+      "targetRoles": [],
+      "evaluationMethods": [],
+      "fabricationMaturity": "unknown",
+      "designRights": [],
+      "claims": [
+        {
+          "text": "A thread-modeling tool explores mechanical, thermal and electrical behavior.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Description",
+          "sourceUrl": "https://hybridatelier.uta.edu/projects/62-embr",
+          "capability": "simulation"
+        }
+      ],
+      "limitations": [
+        "Preliminary source-level note; full-text coding and independent review pending."
+      ],
+      "relevanceToStudio": "A workflow comparison, not validated design guidance.",
+      "proposedFeatureIds": [],
+      "updatedAt": "2026-10-28"
+    },
+    {
+      "id": "seed-pneuact",
+      "paperId": "pneuact",
+      "reviewerId": "seed-source-notes",
+      "codebookVersion": "1.0",
+      "status": "in_progress",
+      "fabricationMethods": [
+        "knit"
+      ],
+      "sensorModalities": [],
+      "representations": [],
+      "authoringCapabilities": [
+        "simulation"
+      ],
+      "targetRoles": [],
+      "evaluationMethods": [],
+      "fabricationMaturity": "unknown",
+      "designRights": [],
+      "claims": [
+        {
+          "text": "An interactive preview accompanies authoring of elastic stitches.",
+          "evidenceLevel": "directly_reported",
+          "locator": "Page 1: Abstract",
+          "sourceUrl": "https://pneuact.csail.mit.edu/file/CHI2022.pdf",
+          "capability": "simulation"
+        }
+      ],
+      "limitations": [
+        "Preliminary source-level note; full-text coding and independent review pending."
+      ],
+      "relevanceToStudio": "A workflow comparison, not validated design guidance.",
+      "proposedFeatureIds": [],
+      "updatedAt": "2026-10-28"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "intent",
+      "name": "Situated sensing intent",
+      "description": "Research hypothesis: adapt this workflow to clinician-facing textile co-design.",
+      "targetRole": "clinician",
+      "cadModule": "Circuit",
+      "status": "implemented",
+      "supportingPaperIds": [
+        "mediknit",
+        "upper-limb-biofeedback"
+      ],
+      "counterexamplePaperIds": [],
+      "evidenceSummary": "Hypothesis / contextual sources only. These candidates have not been included by a completed review; implementation status does not imply research validation.",
+      "assumptions": [
+        "Transfer from these workflows to Soft Sensor Studio remains untested."
+      ],
+      "verificationNeeded": [
+        "Complete screening and full-text coding.",
+        "Evaluate task comprehension with intended users; independently verify electrical and fabrication assumptions."
+      ],
+      "acceptanceCriteria": [
+        "Keep intent, editable geometry, and source provenance separate.",
+        "Do not infer physical continuity or clinical benefit from a drawing."
+      ]
+    },
+    {
+      "id": "structure",
+      "name": "Editable textile structures",
+      "description": "Research hypothesis: adapt this workflow to clinician-facing textile co-design.",
+      "targetRole": "clinician",
+      "cadModule": "Knit Structure Library",
+      "status": "implemented",
+      "supportingPaperIds": [
+        "adacad",
+        "knitui"
+      ],
+      "counterexamplePaperIds": [],
+      "evidenceSummary": "Hypothesis / contextual sources only. These candidates have not been included by a completed review; implementation status does not imply research validation.",
+      "assumptions": [
+        "Transfer from these workflows to Soft Sensor Studio remains untested."
+      ],
+      "verificationNeeded": [
+        "Complete screening and full-text coding.",
+        "Evaluate task comprehension with intended users; independently verify electrical and fabrication assumptions."
+      ],
+      "acceptanceCriteria": [
+        "Keep intent, editable geometry, and source provenance separate.",
+        "Do not infer physical continuity or clinical benefit from a drawing."
+      ]
+    },
+    {
+      "id": "routing",
+      "name": "Explicit circuit connections and geometric checks",
+      "description": "Research hypothesis: adapt this workflow to clinician-facing textile co-design.",
+      "targetRole": "clinician",
+      "cadModule": "Circuit",
+      "status": "implemented",
+      "supportingPaperIds": [
+        "knitui"
+      ],
+      "counterexamplePaperIds": [],
+      "evidenceSummary": "Hypothesis / contextual sources only. These candidates have not been included by a completed review; implementation status does not imply research validation.",
+      "assumptions": [
+        "Transfer from these workflows to Soft Sensor Studio remains untested."
+      ],
+      "verificationNeeded": [
+        "Complete screening and full-text coding.",
+        "Evaluate task comprehension with intended users; independently verify electrical and fabrication assumptions."
+      ],
+      "acceptanceCriteria": [
+        "Keep intent, editable geometry, and source provenance separate.",
+        "Do not infer physical continuity or clinical benefit from a drawing."
+      ]
+    },
+    {
+      "id": "handoff",
+      "name": "Cross-role review and handoff",
+      "description": "Research hypothesis: adapt this workflow to clinician-facing textile co-design.",
+      "targetRole": "clinician",
+      "cadModule": "Research / future CAD",
+      "status": "proposed",
+      "supportingPaperIds": [
+        "mediknit",
+        "edemaflex"
+      ],
+      "counterexamplePaperIds": [],
+      "evidenceSummary": "Hypothesis / contextual sources only. These candidates have not been included by a completed review; implementation status does not imply research validation.",
+      "assumptions": [
+        "Transfer from these workflows to Soft Sensor Studio remains untested."
+      ],
+      "verificationNeeded": [
+        "Complete screening and full-text coding.",
+        "Evaluate task comprehension with intended users; independently verify electrical and fabrication assumptions."
+      ],
+      "acceptanceCriteria": [
+        "Keep intent, editable geometry, and source provenance separate.",
+        "Do not infer physical continuity or clinical benefit from a drawing."
+      ]
+    }
+  ],
+  "searchRuns": [
+    {
+      "id": "discovery-0",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "LuxKnit Loopsense textile paper",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-1",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "AdaCAD Sketch Stitch Embr Knitting Skeletons paper",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-2",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "EdemaFlex smart textile biofeedback upper limb rehabilitation",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-3",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "\"LuxKnit\" paper",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-4",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "\"Loopsense\" DOI",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-5",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "\"Sketch&Stitch\" paper",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-6",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "\"Embr\" embroidery design paper",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-7",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "\"Embr\" \"e-textile\" paper",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Candidate lookup, not a systematic database search."
+    },
+    {
+      "id": "discovery-8",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "KnitUI Fabricating Interactive and Sensing Textiles",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-9",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "Loopsense Low-Scale Unobtrusive",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-10",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "LuxKnit Fabricating Interactive Display",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-11",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "AdaCAD Crafting Software For Smart Textiles Design",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-12",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "Sketch&Stitch Interactive Embroidery",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-13",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "Embr Creative Framework Hand Embroidered",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-14",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "Knitting Skeletons Computer-Aided",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "discovery-15",
+      "sourceDatabase": "Crossref API title lookup",
+      "exactQuery": "SensorKnits Architecting textile sensors",
+      "queryDate": "2026-10-28",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Bibliographic discovery only. Search window is protocol scope, not an applied engine date filter. No database export or review hit count. Some requests returned 429; title match inspected manually. AdaCAD lookup returned an unrelated monograph, rejected."
+    },
+    {
+      "id": "exact-doi-3706598.3713860",
+      "sourceDatabase": "Crossref API exact DOI lookup",
+      "exactQuery": "GET https://api.crossref.org/works/10.1145/3706598.3713860",
+      "queryDate": "2026-10-29",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Exact metadata lookup after discovery; title matched manually. Prior title-search rate limiting resolved by exact lookup. No search-export count."
+    },
+    {
+      "id": "exact-doi-3491102.3502117",
+      "sourceDatabase": "Crossref API exact DOI lookup",
+      "exactQuery": "GET https://api.crossref.org/works/10.1145/3491102.3502117",
+      "queryDate": "2026-10-29",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Exact metadata lookup after discovery; title matched manually. Prior title-search rate limiting resolved by exact lookup. No search-export count."
+    },
+    {
+      "id": "followup-18",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "site.hci.rwth-aachen.de \"Sketch&Stitch\" Hamdan",
+      "queryDate": "2026-10-29",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Follow-up bibliographic discovery. Protocol window is not an applied engine date filter. No database export count."
+    },
+    {
+      "id": "followup-19",
+      "sourceDatabase": "Web search (supplementary discovery)",
+      "exactQuery": "site.washington.edu \"LuxKnit\"",
+      "queryDate": "2026-10-29",
+      "searchWindow": {
+        "from": "2010-01-01",
+        "to": "2026-10-28"
+      },
+      "notes": "Follow-up bibliographic discovery. Protocol window is not an applied engine date filter. No database export count."
+    }
+  ],
+  "materialReferences": [
+    {
+      "id": "fashionary",
+      "name": "Fashionary — The Knit Swatches",
+      "type": "commercial material reference",
+      "sourceUrl": "https://fashionary.org/products/the-knit-swatches",
+      "attribution": "Fashionary; physical swatch/manual reference used by the existing Knit Structure Library.",
+      "reuseNotes": "Linked reference only. No copied figures or PDFs; 26 samples are not 26 academic papers.",
+      "verificationStatus": "separate reference; source linked",
+      "associatedPaperIds": []
+    }
+  ]
+}
