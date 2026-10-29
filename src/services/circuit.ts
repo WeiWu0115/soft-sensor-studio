@@ -216,6 +216,12 @@ export function circuitChecks(p: Project): string[] {
       e.kind !== "insulation" &&
       (findCircuitProfile(e.materialId)?.conductive ?? true),
   );
+  const intentionalConnections = new Set<string>();
+  for (const trace of es.filter((element) => element.kind === "trace"))
+    if (trace.fromId && trace.toId)
+      intentionalConnections.add([trace.fromId, trace.toId].sort().join("::"));
+  const linked = (a: CircuitElement, b: CircuitElement) =>
+    intentionalConnections.has([a.id, b.id].sort().join("::"));
   for (let i = 0; i < conductors.length; i++)
     for (let j = i + 1; j < conductors.length; j++) {
       const a = conductors[i],
@@ -241,18 +247,17 @@ export function circuitChecks(p: Project): string[] {
             ),
         );
         const assigned = t.fromId === r.id || t.toId === r.id;
-        if (assigned && contact) {
-          out.push(
-            `${t.name} / ${r.name}: assigned contact overlaps geometrically; verify physical junction and isolation.`,
-          );
-          continue;
-        }
+        if (assigned && contact) continue;
       } else
         contact =
           a.column <= b.column + b.width &&
           a.column + a.width >= b.column &&
           a.row <= b.row + b.height &&
           a.row + a.height >= b.row;
+      const tracesShareAssignedNode =
+        a.kind === "trace" && b.kind === "trace" &&
+        [a.fromId, a.toId].some((id) => !!id && (id === b.fromId || id === b.toId));
+      if (contact && (linked(a, b) || tracesShareAssignedNode)) continue;
       if (contact)
         out.push(
           `${a.name} / ${b.name}: possible crossing or touching conductive geometry; review isolation and intended connections.`,
