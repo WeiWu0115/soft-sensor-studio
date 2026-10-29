@@ -1,6 +1,6 @@
 # Soft Sensor Studio V2 — Phases 1–3
 
-[Live demo](https://sharkburger.github.io/soft-sensor-studio/) · [Repository](https://github.com/sharkburger/soft-sensor-studio)
+[CAD demo](https://weiwu0115.github.io/soft-sensor-studio/) · [Research version](https://weiwu0115.github.io/soft-sensor-studio/?view=research) · [Repository](https://github.com/WeiWu0115/soft-sensor-studio)
 
 A local-first React/TypeScript CAD research prototype for cylindrical knitted sensor sleeves. No backend or account required.
 
@@ -71,7 +71,7 @@ The pinned GitHub Actions workflow `.github/workflows/deploy.yml` runs tests and
 
 ## Material Playground — presentation edition
 
-The separate [Material Playground](https://sharkburger.github.io/soft-sensor-studio/showcase.html) is intended for research demos and presentations. The original CAD editor remains at the root URL.
+The separate [Material Playground](https://weiwu0115.github.io/soft-sensor-studio/showcase.html) is intended for research demos and presentations. The original CAD editor remains at the root URL.
 
 - Four procedural knitted motifs: Contour, Meander, Chevron, Lattice.
 - Paint/erase conductive stitches directly on the textured swatch; undo/redo edits; switch to assignment-grid view; zoom the swatch.
@@ -88,7 +88,7 @@ The showcase is a second Vite entry (`showcase.html`). Both entries build and de
 
 ## Threadlines — personal data workshop edition
 
-Independent entry: [Threadlines](https://sharkburger.github.io/soft-sensor-studio/threadlines.html). Earlier CAD and Material Playground versions remain available.
+Independent entry: [Threadlines](https://weiwu0115.github.io/soft-sensor-studio/threadlines.html). Earlier CAD and Material Playground versions remain available.
 
 Threadlines turns personal time-series data into an artistic textile. It supports a column-mapping import flow for CSV, TSV and JSON record arrays (including `{ "data": [...] }`), three motifs, palette selection, physical size/gauge settings, a textured hanging-object preview, and optional conductive yarn roles with synthesized note playback. Supported files are limited to 8 MB and 100,000 rows. Vendor exports have not been exhaustively validated; inspect and select columns during import. PDF reports and ZIP archives are not parsed.
 
