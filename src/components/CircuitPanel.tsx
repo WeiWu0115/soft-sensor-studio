@@ -9,7 +9,7 @@ import {
 } from "../models/circuit";
 import { circuitLibrary } from "../data/softCircuitLibrary";
 import {
-  applyIntentTemplate,
+  applyCompleteCircuitTemplate,
   finishTrace,
   designSummary,
 } from "../services/circuit";
@@ -105,20 +105,20 @@ export function CircuitPanel() {
           measurements. Use Design to set sleeve dimensions.
         </p>
         <button
-          disabled={c.elements.length > 194}
+          disabled={c.elements.length > 190 || c.elements.some((element) => element.name === "Readout terminal A")}
           onClick={() => {
-            const next = applyIntentTemplate(p);
+            const next = applyCompleteCircuitTemplate(p);
             commit(next);
-            select(next.circuit?.elements.at(-5)?.id ?? null);
+            select(next.circuit?.elements.at(-1)?.id ?? null);
             ui.set({ enabled: true, tool: "select", draft: [] });
           }}
         >
-          Add editable concept layout
+          Add two-terminal circuit template
         </button>
         <p className="hint">
-          Adds six labeled objects. This is an incomplete assembly concept, not
-          a functional sensor circuit. Pressure/touch use a capacitive
-          placeholder; separate plate layers and hardware still need design.
+          Adds a sensing element, two contacts, two readout terminals and
+          explicitly assigned traces as one editable textile layout. External
+          readout electronics and electrical behavior are not modeled.
         </p>
       </section>
       <section>

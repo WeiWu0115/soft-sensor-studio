@@ -369,6 +369,71 @@ export function applyIntentTemplate(p: Project): Project {
     },
   };
 }
+/** Add a two-terminal textile sensor template with every segment assigned to
+ * explicit endpoint objects. This is an editable concept layout, not a
+ * validated or electrically simulated circuit. */
+export function applyCompleteCircuitTemplate(p: Project): Project {
+  const c = p.circuit ?? emptyCircuit(p.garment.joint);
+  if (
+    c.elements.length > 190 ||
+    c.elements.some((element) => element.name === "Readout terminal A") ||
+    c.elements.reduce((count, element) => count + element.points.length, 0) > 2038
+  ) return p;
+  const { columns, rows } = grid(p.garment);
+  if (columns < 52 || rows < 40) return p;
+  const candidates = Array.from(
+    { length: Math.floor((columns - 50) / 4) + 1 },
+    (_, index) => 22 + index * 4,
+  );
+  const x = candidates.find((candidate) =>
+    p.sensors.every(
+      (sensor) => candidate + 28 < sensor.column || candidate - 22 > sensor.column + sensor.width,
+    ),
+  ) ?? 22;
+  const y = Math.max(8, Math.floor((rows - 36) / 2));
+  const sensing = createCircuitElement("sensing-region", { column: x, row: y }, "resistive");
+  sensing.name = `${c.intent.measurement} sensing element`;
+  sensing.width = 12;
+  sensing.height = 24;
+  const leftPad = createCircuitElement("electrode", { column: x - 4, row: y + 9 }, "c-fabric");
+  leftPad.name = "Sensor contact A";
+  leftPad.width = 4;
+  leftPad.height = 6;
+  const rightPad = createCircuitElement("electrode", { column: x + 12, row: y + 9 }, "c-fabric");
+  rightPad.name = "Sensor contact B";
+  rightPad.width = 4;
+  rightPad.height = 6;
+  const leftTerminal = createCircuitElement("terminal", { column: x - 22, row: 6 }, "connector");
+  leftTerminal.name = "Readout terminal A";
+  const rightTerminal = createCircuitElement("terminal", { column: x + 24, row: 6 }, "connector");
+  rightTerminal.name = "Readout terminal B";
+  const makeTrace = (name: string, points: Point[], fromId: string, toId: string) => {
+    const trace = createCircuitElement("trace", points[0], "c-yarn");
+    trace.name = name;
+    trace.points = points;
+    trace.fromId = fromId;
+    trace.toId = toId;
+    trace.channel = "CH-01";
+    return trace;
+  };
+  const yMid = y + 12;
+  const traces = [
+    makeTrace("Contact A → sensor", [{ column: x - 2, row: yMid }, { column: x, row: yMid }], leftPad.id, sensing.id),
+    makeTrace("Contact B → sensor", [{ column: x + 14, row: yMid }, { column: x + 12, row: yMid }], rightPad.id, sensing.id),
+    makeTrace("Sensor lead A", [{ column: x - 2, row: yMid }, { column: x - 2, row: 8 }, { column: x - 20, row: 8 }], leftPad.id, leftTerminal.id),
+    makeTrace("Sensor lead B", [{ column: x + 14, row: yMid }, { column: x + 14, row: 8 }, { column: x + 26, row: 8 }], rightPad.id, rightTerminal.id),
+  ];
+  for (const element of [sensing, leftPad, rightPad, leftTerminal, rightTerminal, ...traces])
+    if (element.kind !== "insulation") element.channel = "CH-01";
+  const insulation = createCircuitElement("insulation", { column: x - 8, row: y - 5 }, "dielectric");
+  insulation.name = "Sensor isolation zone";
+  insulation.width = 28;
+  insulation.height = 34;
+  return {
+    ...p,
+    circuit: { ...c, elements: [...c.elements, insulation, sensing, leftPad, rightPad, leftTerminal, rightTerminal, ...traces] },
+  };
+}
 export function designSummary(p: Project) {
   const c = p.circuit ?? emptyCircuit(p.garment.joint);
   return `SOFT SENSOR STUDIO — CO-DESIGN BRIEF\nResearch prototype; not a clinically validated design.\n\nProject: ${p.name}\nBody location: ${c.intent.bodyLocation}\nDesired measurement: ${c.intent.measurement}\nClinical / research goal: ${c.intent.goal || "Not specified"}\nGarment: ${p.garment.joint}; ${p.garment.circumferenceMm} × ${p.garment.lengthMm} mm\nTextile structure: ${p.structure}\nGrid: wale upward, course around circumference, column 0 at seam.\n\nLAYOUT AND MATERIALS\n${p.sensors.map((s) => `${s.name} (legacy sensing region): (${s.column},${s.row}) ${s.width}×${s.height}; ${p.materials.find((m) => m.id === s.materialId)?.name ?? s.materialId}; channel ${s.channel || "unassigned"}`).join("\n")}\n${c.elements.map((e) => `${e.name} [${e.id}] (${e.kind}): ${e.kind === "trace" ? e.points.map((q) => `(${q.column},${q.row})`).join(" → ") : `(${e.column},${e.row}) ${e.width}×${e.height}`}; material ${findCircuitProfile(e.materialId)?.name ?? p.materials.find((m) => m.id === e.materialId)?.name ?? "unassigned"}; channel ${e.channel || "unassigned"}; notes: ${e.notes || "none"}${e.kind === "trace" ? `; explicit start ${e.fromId || "unassigned"}, end ${e.toId || "unassigned"}` : ""}`).join("\n")}\n\nSCHEMATIC GEOMETRY REVIEW\n${circuitChecks(p).join("\n") || "No flagged geometric issues."}\nOverlap, adjacency, endpoint assignments and shared stitches do not establish electrical continuity. No electrical behavior is simulated. Insulation geometry does not prove isolation.\n\nFABRICATION ASSUMPTIONS\n${c.assumptions}\n\nUNRESOLVED VALIDATION\n${c.validationNotes}\nNo Kniterate or fabrication export is included. Template layouts may be incomplete circuits and must be reviewed by fabrication and electronics specialists.`;
