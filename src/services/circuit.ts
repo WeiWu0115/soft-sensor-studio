@@ -465,6 +465,24 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
     makeTrace(`${sensor.name} · Lead A`, [{ column: sensor.column - 2, row: y }, { column: sensor.column - 2, row: routeLane }, { column: sensor.column - 14, row: routeLane }], leftPad.id, leftTerminal.id),
     makeTrace(`${sensor.name} · Lead B`, [{ column: sensor.column + sensor.width + 2, row: y }, { column: sensor.column + sensor.width + 2, row: routeLane }, { column: sensor.column + sensor.width + 14, row: routeLane }], rightPad.id, rightTerminal.id),
   ];
+  // Logical connectivity is separate from the drawn route. Each side is its
+  // own net; the sensing element is a two-terminal component between them.
+  const netA = { id: crypto.randomUUID(), name: `${sensor.channel || sensor.name} · A`, notes: "Intended connection; not electrically validated." };
+  const netB = { id: crypto.randomUUID(), name: `${sensor.channel || sensor.name} · B`, notes: "Intended connection; not electrically validated." };
+  const pin = (elementId: string, name: string, netId: string, point: Point) => ({ id: crypto.randomUUID(), elementId, name, netId, point });
+  const pins = [
+    pin(sensing.id, "A", netA.id, { column: sensor.column, row: y }),
+    pin(leftPad.id, "Pad A", netA.id, { column: sensor.column - 2, row: y }),
+    pin(leftTerminal.id, "Readout A", netA.id, { column: sensor.column - 14, row: routeLane }),
+    pin(sensing.id, "B", netB.id, { column: sensor.column + sensor.width, row: y }),
+    pin(rightPad.id, "Pad B", netB.id, { column: sensor.column + sensor.width + 2, row: y }),
+    pin(rightTerminal.id, "Readout B", netB.id, { column: sensor.column + sensor.width + 14, row: routeLane }),
+  ];
+  const pinAt = (elementId: string, netId: string) => pins.find(item => item.elementId === elementId && item.netId === netId)!.id;
+  Object.assign(traces[0], { netId: netA.id, fromPinId: pinAt(leftPad.id, netA.id), toPinId: pinAt(sensing.id, netA.id) });
+  Object.assign(traces[2], { netId: netA.id, fromPinId: pinAt(leftPad.id, netA.id), toPinId: pinAt(leftTerminal.id, netA.id) });
+  Object.assign(traces[1], { netId: netB.id, fromPinId: pinAt(rightPad.id, netB.id), toPinId: pinAt(sensing.id, netB.id) });
+  Object.assign(traces[3], { netId: netB.id, fromPinId: pinAt(rightPad.id, netB.id), toPinId: pinAt(rightTerminal.id, netB.id) });
   const isolation = createCircuitElement("insulation", { column: sensor.column - 8, row: sensor.row - 4 }, "dielectric");
   isolation.name = `${sensor.name} · Isolation layer`;
   isolation.width = sensor.width + 16; isolation.height = sensor.height + 8;
@@ -483,7 +501,7 @@ export function applySensorCircuitTemplate(p: Project, sensor: Project["sensors"
     ];
     return points.some((q) => q.column < 0 || q.row < 0 || q.column > columns || q.row > rows);
   })) return p;
-  return { ...p, circuit: { ...c, elements: [...c.elements, ...group] } };
+  return { ...p, circuit: { ...c, pins: [...(c.pins ?? []), ...pins], nets: [...(c.nets ?? []), netA, netB], elements: [...c.elements, ...group] } };
 }
 export function syncSensorCircuit(p: Project, before: Project["sensors"][number], sensor: Project["sensors"][number]): Project {
   if (!p.circuit?.elements.some((element) => element.sensorId === sensor.id)) return p;

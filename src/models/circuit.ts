@@ -9,6 +9,20 @@ export const circuitKinds = [
 export type CircuitKind = (typeof circuitKinds)[number];
 export type TextileLayer = "surface" | "integrated" | "inner";
 export type Point = { column: number; row: number };
+/** Logical electrical endpoint attached to a drawable circuit element. */
+export interface CircuitPin {
+  id: string;
+  elementId: string;
+  name: string;
+  netId?: string;
+  point: Point;
+}
+/** A named intended electrical net. Membership is explicit and independent of geometry. */
+export interface CircuitNet {
+  id: string;
+  name: string;
+  notes: string;
+}
 export interface CircuitElement {
   id: string;
   kind: CircuitKind;
@@ -28,11 +42,16 @@ export interface CircuitElement {
   batteryId?: string;
   knitStructureId?: string;
   sensorTemplateVersion?: number;
+  netId?: string;
+  fromPinId?: string;
+  toPinId?: string;
 }
 export interface CircuitDesign {
   version: 1;
   intent: { bodyLocation: string; measurement: string; goal: string };
   elements: CircuitElement[];
+  pins: CircuitPin[];
+  nets: CircuitNet[];
   assumptions: string;
   validationNotes: string;
 }
@@ -40,6 +59,8 @@ export const emptyCircuit = (bodyLocation = "Knee"): CircuitDesign => ({
   version: 1,
   intent: { bodyLocation, measurement: "Joint movement", goal: "" },
   elements: [],
+  pins: [],
+  nets: [],
   assumptions:
     "Prototype assembly only. Verify yarn, insulation, attachments, connector strain relief and readout hardware on physical samples.",
   validationNotes:

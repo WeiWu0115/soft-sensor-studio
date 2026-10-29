@@ -18,6 +18,8 @@ export function validateCircuit(value: unknown, existingIds: Set<string>) {
     !str(c.assumptions, 10000) ||
     !str(c.validationNotes, 10000) ||
     !Array.isArray(c.elements) ||
+    !Array.isArray(c.pins) || c.pins.length > 1000 ||
+    !Array.isArray(c.nets) || c.nets.length > 500 ||
     c.elements.length > 200
   )
     fail();
@@ -49,6 +51,25 @@ export function validateCircuit(value: unknown, existingIds: Set<string>) {
       if (!q || !integer(q.column) || !integer(q.row)) fail();
     for (const k of ["fromId", "toId"])
       if (e[k] !== undefined && !str(e[k], 100)) fail();
+  }
+  const netIds = new Set<string>();
+  for (const net of c.nets) {
+    if (!net || !str(net.id, 100) || !net.id || netIds.has(net.id) ||
+        !str(net.name, 200) || !net.name || !str(net.notes, 2000)) fail();
+    netIds.add(net.id);
+  }
+  const pinIds = new Set<string>();
+  for (const pin of c.pins) {
+    if (!pin || !str(pin.id, 100) || !pin.id || pinIds.has(pin.id) ||
+        !str(pin.elementId, 100) || !str(pin.name, 100) || !pin.name ||
+        !ids.has(pin.elementId) || !pin.point || !integer(pin.point.column) || !integer(pin.point.row) ||
+        (pin.netId !== undefined && (!str(pin.netId, 100) || !netIds.has(pin.netId)))) fail();
+    pinIds.add(pin.id);
+  }
+  for (const e of c.elements) {
+    if (e.netId !== undefined && (!str(e.netId, 100) || !netIds.has(e.netId))) fail();
+    for (const key of ["fromPinId", "toPinId"])
+      if (e[key] !== undefined && (!str(e[key], 100) || !pinIds.has(e[key]))) fail();
   }
   if (totalPoints > 2048) fail();
 }

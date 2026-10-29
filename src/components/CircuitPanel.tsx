@@ -236,6 +236,14 @@ export function CircuitPanel() {
         </label>
       </section>
       <section>
+        <h3>Logical nets</h3>
+        <p className="hint">Connections are now stored as named design intent, separately from the drawn geometry.</p>
+        {(c.nets ?? []).length === 0 ? <p className="hint">No explicit nets yet. Add or recreate a sensor template to create its A/B nets.</p> : (c.nets ?? []).map((net) => {
+          const pins = (c.pins ?? []).filter((pin) => pin.netId === net.id);
+          return <div className="measurement" key={net.id}><span>{net.name}</span><strong>{pins.length} pins · {pins.map((pin) => `${c.elements.find((element) => element.id === pin.elementId)?.name ?? "?"} (${pin.name})`).join(" · ")}</strong></div>;
+        })}
+      </section>
+      <section>
         <h3>Visual layers</h3>
         {Object.entries(ui.layers).map(([key, on]) => (
           <label className="circuit-layer" key={key}>
