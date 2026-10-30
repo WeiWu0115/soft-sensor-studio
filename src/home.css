@@ -10,3 +10,4 @@
 @media(max-width:620px){.structure-section-head{align-items:start;flex-direction:column;gap:16px}.structure-card-grid{gap:10px}.structure-card-top{padding:9px 8px 0;align-items:flex-start;flex-direction:column}.structure-card-top b{font-size:5px}.structure-card svg{height:100px}.structure-card-copy{padding:12px}.structure-card-copy h3{font-size:15px}.structure-card-copy p{min-height:68px;font-size:9px}.structure-card-stats{margin:10px 0;padding:8px 0}.structure-card-stats b{font-size:9px}.structure-card-action{font-size:8px}}
 
 .structure-card-art{position:relative;display:block;height:126px;padding:11px 14px;background:radial-gradient(ellipse at 50% 40%,#fbfcf6,#e7e9df);overflow:hidden}.structure-card-art canvas{display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.home-hero h1{font-family:'DM Sans',Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:700;letter-spacing:-1.8px}.home-hero h1 em{font-weight:700}
