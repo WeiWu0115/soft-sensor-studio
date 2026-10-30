@@ -229,6 +229,7 @@ export default function Research() {
     <div className="research-app">
       <div className="r-header">
         <a className="r-brand" href="./">
+          <span className="soft-cad-logo-crop"><img src="./soft-sensor-cad-logo.png" alt="" /></span>
           soft sensor <span>STUDIO</span>
         </a>
         <span>RESEARCH / SEED CORPUS</span>
