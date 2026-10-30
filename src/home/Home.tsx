@@ -41,6 +41,35 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="home-machine-path" id="machine-workflow">
+          <div className="machine-path-heading">
+            <p className="eyebrow">SOFT PCB → KNIT GRAPH → MACHINE</p>
+            <h2>Designed for machine-knit soft circuits.</h2>
+            <p>The goal is to turn a textile circuit design into a knit structure and, eventually, a machine program for automated knitting.</p>
+          </div>
+          <div className="machine-path-grid">
+            <article>
+              <span className="machine-stage">01 · AVAILABLE</span>
+              <h3>Design the textile circuit</h3>
+              <p>Place sensor regions, contacts, yarn routes, textile layers, and knit structures in the CAD workspace.</p>
+              <a href="./studio.html">Open CAD Studio ↗</a>
+            </article>
+            <article>
+              <span className="machine-stage">02 · TOPOLOGY PREVIEW</span>
+              <h3>Represent the knitted loops</h3>
+              <p>Hofmann and colleagues’ Knit Graph work models loops as nodes and yarn and stitch relationships as edges. This project’s browser preview follows that graph idea; it is implemented in TypeScript.</p>
+              <a href="https://github.com/mhofmann-Khoury/knit_graph" target="_blank" rel="noreferrer">Explore Hofmann’s Knit Graph work ↗</a>
+            </article>
+            <article className="machine-stage-next">
+              <span className="machine-stage">03 · NEXT INTEGRATION</span>
+              <h3>Compile for an automated knitting machine</h3>
+              <p>Integrate a Python-based knit graph and machine-programming workflow, then validate the output on a named machine. Direct machine-file export is not available yet.</p>
+              <a href="https://make4all.org/portfolio/knitscript-a-domain-specific-language-for-advanced-machine-knitting/" target="_blank" rel="noreferrer">Read Hofmann et al. on KnitScript and Python ↗</a>
+            </article>
+          </div>
+          <p className="machine-path-note">Current project export: editable CAD JSON. No machine-ready Knitout, KnitScript, or manufacturer-specific file is generated. Circuit continuity, yarn behavior, and fabricability still require physical validation.</p>
+        </section>
+
         <section id="workflow" className="home-workflow">
           <div className="section-heading"><p className="eyebrow">A WORKSPACE FOR CO-DESIGN</p><h2>From textile idea to stitch-level view.</h2></div>
           <div className="workflow-grid">
