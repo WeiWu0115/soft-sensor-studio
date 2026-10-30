@@ -53,7 +53,7 @@ export default function Home() {
         <section className="home-structures" id="knit-structures">
           <div className="structure-section-head">
             <div><p className="eyebrow">KNIT STRUCTURE COLLECTION · 01—26</p><h2>Choose your textile base.</h2><p>Card textures are drawn from each structure’s stitch repeat. Open one to inspect its repeat and apply it in CAD.</p></div>
-            <a href="./studio.html?library=jersey">Browse full library <span>↗</span></a>
+            <a href="./studio.html?library=all">Browse full library <span>↗</span></a>
           </div>
           <div className="structure-card-grid">
             {featured.map((structure) => (
