@@ -64,6 +64,8 @@ export function CircuitPanel() {
   };
   return (
     <>
+      <details className="circuit-group" open>
+      <summary>Board setup <small>{p.layerMode === "double" ? "Double layer" : "Single layer"}</small></summary>
       <section className="board-setup">
         <h3>Textile stack</h3>
         <div className="joint-select">
@@ -94,8 +96,10 @@ export function CircuitPanel() {
           ))}
         </div>
       </section>
+      </details>
+      <details className="circuit-group">
+      <summary>Sensing intent</summary>
       <section>
-        <h3>Sensing intent</h3>
         <p className="hint">
           Co-design a concept, then review it with fabrication and electronics
           specialists.
@@ -159,8 +163,10 @@ export function CircuitPanel() {
           electrical behavior are not modeled.
         </p>
       </section>
+      </details>
+      <details className="circuit-group" open>
+      <summary>Circuit tools <small>{ui.tool === "select" ? "Select / move" : kindLabel[ui.tool]}</small></summary>
       <section>
-        <h3>Circuit tools</h3>
         <label>
           <input
             type="checkbox"
@@ -236,17 +242,21 @@ export function CircuitPanel() {
           </select>
         </label>
       </section>
+      </details>
+      <details className="circuit-group">
+      <summary>Logical nets <small>{(c.nets ?? []).length}</small></summary>
       <section>
-        <h3>Logical nets</h3>
         <p className="hint">Connections are now stored as named design intent, separately from the drawn geometry.</p>
         {(c.nets ?? []).length === 0 ? <p className="hint">No explicit nets yet. Add or recreate a sensor template to create its A/B nets.</p> : (c.nets ?? []).map((net) => {
           const pins = (c.pins ?? []).filter((pin) => pin.netId === net.id);
           return <div className="measurement" key={net.id}><span>{net.name}</span><strong>{pins.length} pins · {pins.map((pin) => `${c.elements.find((element) => element.id === pin.elementId)?.name ?? "?"} (${pin.name})`).join(" · ")}</strong></div>;
         })}
       </section>
+      </details>
       <KnitGraphPreview project={p} />
+      <details className="circuit-group">
+      <summary>Visual layers</summary>
       <section>
-        <h3>Visual layers</h3>
         {Object.entries(ui.layers).map(([key, on]) => (
           <label className="circuit-layer" key={key}>
             <input
@@ -273,8 +283,10 @@ export function CircuitPanel() {
           Visibility affects 2D and 3D views, not connection checks.
         </p>
       </section>
+      </details>
+      <details className="circuit-group">
+      <summary>Soft Circuit Library</summary>
       <section>
-        <h3>Soft Circuit Library</h3>
         <p className="hint">
           Select a matching circuit object to link a profile directly. With no
           matching object selected, it becomes the default for your next draw.
@@ -326,8 +338,10 @@ export function CircuitPanel() {
             </article>
           ))}
       </section>
+      </details>
+      <details className="circuit-group">
+      <summary>Circuit objects <small>{c.elements.length}</small></summary>
       <section>
-        <h3>Circuit objects · {c.elements.length}</h3>
         <p className="hint">
           Legacy sensing areas remain in Design and are available as connection
           targets.
@@ -353,8 +367,10 @@ export function CircuitPanel() {
           </p>
         )}
       </section>
+      </details>
+      <details className="circuit-group">
+      <summary>Design brief</summary>
       <section>
-        <h3>Design brief</h3>
         <label className="field">
           Fabrication assumptions
           <textarea
@@ -381,6 +397,7 @@ export function CircuitPanel() {
           simulation. No Kniterate / fabrication export.
         </p>
       </section>
+      </details>
     </>
   );
 }

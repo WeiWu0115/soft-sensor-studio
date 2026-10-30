@@ -68,8 +68,9 @@ export function KnitGraphPreview({ project }: { project: Project }) {
     });
   }, [graph, project.sensors]);
 
-  return <section className="knit-graph-preview">
-    <div className="section-heading"><div><h3>Knit Graph · loop topology</h3><p className="hint">Loop-level preview following the <a href="https://mhofmann-khoury.github.io/knit_graph/" target="_blank" rel="noreferrer">Knit Graph representation</a>. Dotted outline = sensor region; colored loops = assigned conductive-yarn route.</p></div><span>{graph.structure}</span></div>
+  return <details className="knit-graph-preview">
+    <summary><span>Knit Graph · loop topology</span><small>{graph.loops.length.toLocaleString()} loops</small></summary>
+    <div className="knit-graph-content"><p className="hint">Loop-level preview following the <a href="https://mhofmann-khoury.github.io/knit_graph/" target="_blank" rel="noreferrer">Knit Graph representation</a>. Dotted outline = sensor region; colored loops = assigned conductive-yarn route. Structure: {graph.structure}.</p>
     {graph.legacyRoutePreview && <p className="hint">Existing template routes are grouped by their A/B labels for preview; this does not add or infer saved electrical connections.</p>}
     <canvas ref={ref} width={720} height={480} aria-label={`Knit graph with ${graph.loops.length} stitch loops and ${graph.conductivePaths.length} conductive yarn paths`} />
     <div className="knit-graph-stats"><span>{graph.loops.length.toLocaleString()} loop nodes</span><span>{graph.edges.filter(edge => edge.kind === "stitch").length.toLocaleString()} stitch links</span><span>{graph.conductivePaths.length} conductive nets</span></div>
@@ -84,5 +85,6 @@ export function KnitGraphPreview({ project }: { project: Project }) {
       <p className="knit-machine-blocked"><strong>Machine verification pending.</strong> Select the knitting machine and define its beds, carriers, gauge and supported operations before treating this route as knittable.</p>
     </details>
     <p className="hint">This is a graph-topology preview, not machine instruction output. Actual knittability still depends on machine, gauge, carriers, yarn and fabrication checks.</p>
-  </section>;
+    </div>
+  </details>;
 }
