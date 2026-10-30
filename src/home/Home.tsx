@@ -61,13 +61,16 @@ export default function Home() {
               <a href="https://github.com/mhofmann-Khoury/knit_graph" target="_blank" rel="noreferrer">Explore Hofmann’s Knit Graph work ↗</a>
             </article>
             <article className="machine-stage-next">
-              <span className="machine-stage">03 · NEXT INTEGRATION</span>
-              <h3>Compile for an automated knitting machine</h3>
-              <p>Integrate a Python-based knit graph and machine-programming workflow, then validate the output on a named machine. Direct machine-file export is not available yet.</p>
-              <a href="https://make4all.org/portfolio/knitscript-a-domain-specific-language-for-advanced-machine-knitting/" target="_blank" rel="noreferrer">Read Hofmann et al. on KnitScript and Python ↗</a>
+              <span className="machine-stage">03 · SHIMA SEIKI SWG HANDOFF</span>
+              <h3>Compile the design for a knitting machine</h3>
+              <p>The CAD now exports a Python handoff JSON from Knit Graph. The intended pipeline is KnitScript → Knitout → Shima Seiki DAT; the exported handoff still needs a Python adapter before it becomes a machine file.</p>
+              <a href="https://make4all.org/portfolio/knitscript-a-domain-specific-language-for-advanced-machine-knitting/" target="_blank" rel="noreferrer">Hofmann et al. · KnitScript research ↗</a>
+              <a href="https://github.com/mhofmann-Khoury/knit_script" target="_blank" rel="noreferrer">KnitScript compiler ↗</a>
+              <a href="https://github.com/mhofmann-Khoury/knitout_to_dat_python" target="_blank" rel="noreferrer">Knitout → Shima DAT converter ↗</a>
+              <a href="https://www.shimaseiki.com/product/knit/swg_n2/" target="_blank" rel="noreferrer">SHIMA SEIKI SWG machine ↗</a>
             </article>
           </div>
-          <p className="machine-path-note">Current project export: editable CAD JSON. No machine-ready Knitout, KnitScript, or manufacturer-specific file is generated. Circuit continuity, yarn behavior, and fabricability still require physical validation.</p>
+          <p className="machine-path-note">The SWG link opens the manufacturer’s machine page; the converter link opens Hofmann’s Python Knitout-to-DAT project. The CAD handoff JSON is not a KnitScript, Knitout, or DAT file, and cannot be sent to the machine yet. Machine-model, carrier, gauge, and conductive-yarn validation remain part of the adapter and swatch workflow.</p>
         </section>
 
         <section id="workflow" className="home-workflow">

@@ -9,6 +9,28 @@ export function KnitGraphPreview({ project }: { project: Project }) {
   const graph = useMemo(() => buildKnitGraph(project), [project]);
   const coursePlan = useMemo(() => buildCoursePlan(graph), [graph]);
   const operationCounts = useMemo(() => summarizeCoursePlan(coursePlan), [coursePlan]);
+  const exportPythonHandoff = () => {
+    const payload = {
+      format: "soft-sensor-studio-knit-handoff-v1",
+      targetMachineFamily: "Shima Seiki SWG / WHOLEGARMENT",
+      generatedAt: new Date().toISOString(),
+      project,
+      graph,
+      coursePlan,
+      notes: [
+        "Intermediate design handoff only; not a KnitScript program, Knitout file, or Shima Seiki DAT file.",
+        "The Python adapter must map graph operations, gauge, needle beds, and yarn carriers to the selected SWG model.",
+        "Conductive paths are design intent and have not been validated for yarn inlay or electrical continuity.",
+      ],
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `${project.name.replace(/[^a-z0-9-_]/gi, "_")}-shima-swg-handoff.json`;
+    anchor.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas?.getContext("2d");
@@ -83,6 +105,13 @@ export function KnitGraphPreview({ project }: { project: Project }) {
       <ol>{coursePlan.slice(0, 8).map(course => <li key={course.row}>Course {course.row + 1} · {course.direction} · {course.operations.length} stitches · {course.operations.filter(operation => operation.conductiveNets.length).length} conductive route stitches</li>)}</ol>
       {coursePlan.length > 8 && <p className="hint">Showing first 8 of {coursePlan.length} courses.</p>}
       <p className="knit-machine-blocked"><strong>Machine verification pending.</strong> Select the knitting machine and define its beds, carriers, gauge and supported operations before treating this route as knittable.</p>
+      <div className="knit-machine-export">
+        <button type="button" onClick={exportPythonHandoff}>Export Python handoff · JSON</button>
+        <a href="https://github.com/mhofmann-Khoury/knit_script" target="_blank" rel="noreferrer">KnitScript compiler ↗</a>
+        <a href="https://github.com/mhofmann-Khoury/knitout_to_dat_python" target="_blank" rel="noreferrer">SWG Knitout → DAT converter ↗</a>
+        <a href="https://www.shimaseiki.com/product/knit/swg_n2/" target="_blank" rel="noreferrer">SHIMA SEIKI SWG machine ↗</a>
+        <small>The JSON is a project handoff for a future Python adapter. It cannot be loaded by the knitting machine as-is.</small>
+      </div>
     </details>
     <p className="hint">This is a graph-topology preview, not machine instruction output. Actual knittability still depends on machine, gauge, carriers, yarn and fabrication checks.</p>
     </div>
