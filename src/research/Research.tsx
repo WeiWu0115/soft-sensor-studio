@@ -103,12 +103,12 @@ function load() {
   }
 }
 const sections = [
-  "database",
   "analysis",
+  "database",
 ] as const;
 const titles = [
-  "Paper Database",
   "Analysis",
+  "Paper Database",
 ];
 const link = (paper?: string, section = "database") =>
   `?section=${section}${paper ? "&paper=" + encodeURIComponent(paper) : ""}`;
@@ -144,7 +144,9 @@ export default function Research() {
     route.get("section") as (typeof sections)[number],
   )
     ? route.get("section")!
-    : "database";
+    : route.has("paper")
+      ? "database"
+      : "analysis";
   const selected = data.papers.find((p) => p.id === route.get("paper"));
   const shown = filterPapers(data, filters, sort);
   const detailRef = useRef<HTMLElement>(null);
