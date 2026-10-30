@@ -1,6 +1,6 @@
 # Soft Sensor Studio V2 — Phases 1–3
 
-[Home](https://weiwu0115.github.io/soft-sensor-studio/) · [CAD Studio](https://weiwu0115.github.io/soft-sensor-studio/studio.html) · [Research version](https://weiwu0115.github.io/soft-sensor-studio/studio.html?view=research) · [Repository](https://github.com/WeiWu0115/soft-sensor-studio)
+[Home](https://weiwu0115.github.io/soft-sensor-studio/) · [CAD Studio](https://weiwu0115.github.io/soft-sensor-studio/studio.html) · [Research Database](https://weiwu0115.github.io/soft-sensor-studio/research.html) · [Repository](https://github.com/WeiWu0115/soft-sensor-studio)
 
 A local-first React/TypeScript CAD research prototype for cylindrical knitted sensor sleeves. No backend or account required.
 

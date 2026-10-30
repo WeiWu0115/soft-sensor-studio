@@ -111,7 +111,7 @@ const titles = [
   "Analysis",
 ];
 const link = (paper?: string, section = "database") =>
-  `?view=research&section=${section}${paper ? "&paper=" + encodeURIComponent(paper) : ""}`;
+  `?section=${section}${paper ? "&paper=" + encodeURIComponent(paper) : ""}`;
 function shortName(p: Paper) {
   return p.id === "pneuact"
     ? "PneuAct"
