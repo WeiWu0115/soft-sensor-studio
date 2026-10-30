@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useRef } from "react";
 import type { Project } from "../models/project";
-import { buildKnitGraph } from "../services/knitGraph";
+import { buildCoursePlan, buildKnitGraph, summarizeCoursePlan } from "../services/knitGraph";
 
 const colors = ["#c06448", "#327b7c", "#6a6597", "#b18127", "#527554"];
 
 export function KnitGraphPreview({ project }: { project: Project }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const graph = useMemo(() => buildKnitGraph(project), [project]);
+  const coursePlan = useMemo(() => buildCoursePlan(graph), [graph]);
+  const operationCounts = useMemo(() => summarizeCoursePlan(coursePlan), [coursePlan]);
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas?.getContext("2d");
@@ -73,6 +75,14 @@ export function KnitGraphPreview({ project }: { project: Project }) {
     <div className="knit-graph-stats"><span>{graph.loops.length.toLocaleString()} loop nodes</span><span>{graph.edges.filter(edge => edge.kind === "stitch").length.toLocaleString()} stitch links</span><span>{graph.conductivePaths.length} conductive nets</span></div>
     {graph.conductivePaths.map((path, index) => <p className="knit-graph-net" key={path.netId}><i style={{ background: colors[index % colors.length] }} />{path.name}<strong>{path.connected ? "Topology connected" : "Topology disconnected"}</strong></p>)}
     {graph.warnings.length > 0 && <ul className="knit-graph-warnings">{graph.warnings.map(warning => <li key={warning}>{warning}</li>)}</ul>}
+    <details className="knit-course-plan"><summary>Course-by-course knitting plan · abstract</summary>
+      <p className="hint">Loops are ordered into alternating carriage passes. This is not machine code: cast-on/bind-off, carrier changes, yarn inlay and machine-specific legality are not generated yet.</p>
+      <div className="knit-graph-stats"><span>{coursePlan.length} courses</span><span>{coursePlan.reduce((n, course) => n + course.operations.length, 0).toLocaleString()} stitch operations</span><span>Serpentine pass order</span></div>
+      <div className="knit-course-ops">{operationCounts.map(item => <span key={item.stitch}><b>{item.stitch}</b> {item.count.toLocaleString()}</span>)}</div>
+      <ol>{coursePlan.slice(0, 8).map(course => <li key={course.row}>Course {course.row + 1} · {course.direction} · {course.operations.length} stitches · {course.operations.filter(operation => operation.conductiveNets.length).length} conductive route stitches</li>)}</ol>
+      {coursePlan.length > 8 && <p className="hint">Showing first 8 of {coursePlan.length} courses.</p>}
+      <p className="knit-machine-blocked"><strong>Machine verification pending.</strong> Select the knitting machine and define its beds, carriers, gauge and supported operations before treating this route as knittable.</p>
+    </details>
     <p className="hint">This is a graph-topology preview, not machine instruction output. Actual knittability still depends on machine, gauge, carriers, yarn and fabrication checks.</p>
   </section>;
 }

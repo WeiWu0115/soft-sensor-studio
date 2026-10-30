@@ -6,6 +6,8 @@ import { resolveBaseStructureId, stitchAt } from "./knitPatternGenerator";
 export type KnitLoop = { id: string; column: number; row: number; stitch: string };
 export type KnitEdge = { id: string; from: string; to: string; kind: "stitch" | "yarn" };
 export type ConductivePath = { netId: string; name: string; nodeIds: string[]; edges: Array<[string, string]>; connected: boolean };
+export type CourseOperation = { column: number; row: number; stitch: string; conductiveNets: string[] };
+export type CoursePlan = { row: number; direction: "right" | "left"; operations: CourseOperation[] };
 export type KnitGraphModel = {
   columns: number;
   rows: number;
@@ -134,4 +136,31 @@ export function buildKnitGraph(project: Project): KnitGraphModel {
   for (const [id, owners] of shared) if (new Set(owners).size > 1) warnings.push(`Separate nets share stitch ${id}; possible unintended conductive contact.`);
 
   return { columns, rows, loops, edges, conductivePaths, warnings, structure: structureId, legacyRoutePreview };
+}
+
+/** Order graph loops into course-wise carriage passes. This is an abstract
+ * operation schedule; cast-on, bind-off, carrier choreography and machine
+ * legality are intentionally left to a selected machine backend. */
+export function buildCoursePlan(graph: KnitGraphModel): CoursePlan[] {
+  if (!graph.loops.length) return [];
+  const loopsByRow = Array.from({ length: graph.rows }, () => [] as KnitLoop[]);
+  for (const loop of graph.loops) loopsByRow[loop.row]?.push(loop);
+  const conductiveAt = new Map<string, string[]>();
+  for (const path of graph.conductivePaths) for (const id of path.nodeIds) {
+    const nets = conductiveAt.get(id) ?? [];
+    if (!nets.includes(path.name)) nets.push(path.name);
+    conductiveAt.set(id, nets);
+  }
+  return loopsByRow.map((loops, row) => {
+    const direction = row % 2 === 0 ? "right" : "left";
+    const ordered = [...loops].sort((a, b) => direction === "right" ? a.column - b.column : b.column - a.column);
+    return { row, direction, operations: ordered.map(loop => ({ column: loop.column, row, stitch: loop.stitch, conductiveNets: conductiveAt.get(loop.id) ?? [] })) };
+  });
+}
+
+export function summarizeCoursePlan(plan: CoursePlan[]) {
+  const counts = new Map<string, number>();
+  for (const course of plan) for (const operation of course.operations)
+    counts.set(operation.stitch, (counts.get(operation.stitch) ?? 0) + 1);
+  return [...counts].sort(([a], [b]) => a.localeCompare(b)).map(([stitch, count]) => ({ stitch, count }));
 }
