@@ -1,6 +1,6 @@
 # Soft Sensor Studio V2 — Phases 1–3
 
-[CAD demo](https://weiwu0115.github.io/soft-sensor-studio/) · [Research version](https://weiwu0115.github.io/soft-sensor-studio/?view=research) · [Repository](https://github.com/WeiWu0115/soft-sensor-studio)
+[Home](https://weiwu0115.github.io/soft-sensor-studio/) · [CAD Studio](https://weiwu0115.github.io/soft-sensor-studio/studio.html) · [Research version](https://weiwu0115.github.io/soft-sensor-studio/studio.html?view=research) · [Repository](https://github.com/WeiWu0115/soft-sensor-studio)
 
 A local-first React/TypeScript CAD research prototype for cylindrical knitted sensor sleeves. No backend or account required.
 
@@ -71,7 +71,7 @@ The pinned GitHub Actions workflow `.github/workflows/deploy.yml` runs tests and
 
 ## Pattern Playground — presentation edition
 
-The separate [Pattern Playground](https://weiwu0115.github.io/soft-sensor-studio/showcase.html) is intended for research demos and presentations. The original CAD editor remains at the root URL.
+The separate [Pattern Playground](https://weiwu0115.github.io/soft-sensor-studio/showcase.html) is intended for research demos and presentations. The original CAD editor is available at [studio.html](https://weiwu0115.github.io/soft-sensor-studio/studio.html); the root URL is the project homepage.
 
 - Four procedural knitted motifs: Contour, Meander, Chevron, Lattice.
 - Paint/erase conductive stitches directly on the textured swatch; undo/redo edits; switch to assignment-grid view; zoom the swatch.

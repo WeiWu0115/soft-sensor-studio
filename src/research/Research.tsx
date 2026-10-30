@@ -230,7 +230,7 @@ export default function Research() {
           soft sensor <span>STUDIO</span>
         </a>
         <span>RESEARCH / SEED CORPUS</span>
-        <a href="./">Open CAD ↗</a>
+        <a href="./studio.html">Open CAD ↗</a>
         <a href="./showcase.html">Pattern Playground ↗</a>
       </div>
       <div className="r-hero">
