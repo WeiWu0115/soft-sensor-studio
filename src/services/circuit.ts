@@ -552,7 +552,19 @@ export function syncSensorCircuit(p: Project, before: Project["sensors"][number]
     }
     return { ...element, points, column: points[0]?.column ?? element.column, row: points[0]?.row ?? element.row };
   });
-  return { ...p, circuit: { ...p.circuit, elements: routed } };
+  const elementById = new Map(routed.map(element => [element.id, element]));
+  const previousById = new Map(previous.map(element => [element.id, element]));
+  const pins = (p.circuit.pins ?? []).map(pin => {
+    const after = elementById.get(pin.elementId);
+    const beforeElement = previousById.get(pin.elementId);
+    if (!after || !beforeElement || after.sensorId !== sensor.id) return pin;
+    if (after.kind === "sensing-region") {
+      const isB = pin.name === "B";
+      return { ...pin, point: { column: isB ? after.column + after.width : after.column, row: after.row + Math.floor(after.height / 2) } };
+    }
+    return { ...pin, point: { column: pin.point.column + after.column - beforeElement.column, row: pin.point.row + after.row - beforeElement.row } };
+  });
+  return { ...p, circuit: { ...p.circuit, elements: routed, pins } };
 }
 export function designSummary(p: Project) {
   const c = p.circuit ?? emptyCircuit(p.garment.joint);

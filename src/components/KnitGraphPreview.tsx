@@ -1,0 +1,78 @@
+import { useEffect, useMemo, useRef } from "react";
+import type { Project } from "../models/project";
+import { buildKnitGraph } from "../services/knitGraph";
+
+const colors = ["#c06448", "#327b7c", "#6a6597", "#b18127", "#527554"];
+
+export function KnitGraphPreview({ project }: { project: Project }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const graph = useMemo(() => buildKnitGraph(project), [project]);
+  useEffect(() => {
+    const canvas = ref.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+    const { columns, rows } = graph, pad = 24;
+    const loopById = new Map(graph.loops.map(loop => [loop.id, loop]));
+    const cell = Math.min((canvas.width - pad * 2) / columns, (canvas.height - pad * 2) / rows);
+    const left = (canvas.width - cell * columns) / 2;
+    const top = (canvas.height - cell * rows) / 2;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#fbfaf6"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Wale/stitch relationships and yarn continuity in the base Jersey swatch.
+    ctx.lineWidth = Math.max(.45, cell * .12);
+    ctx.strokeStyle = "#c9c8bd";
+    ctx.beginPath();
+    for (const edge of graph.edges) {
+      if (edge.kind !== "stitch") continue;
+      const a = loopById.get(edge.from)!;
+      const b = loopById.get(edge.to)!;
+      ctx.moveTo(left + (a.column + .5) * cell, top + (rows - a.row - .5) * cell);
+      ctx.lineTo(left + (b.column + .5) * cell, top + (rows - b.row - .5) * cell);
+    }
+    ctx.stroke();
+    ctx.strokeStyle = "#968f7f";
+    ctx.beginPath();
+    for (const edge of graph.edges) {
+      if (edge.kind !== "yarn") continue;
+      const a = loopById.get(edge.from)!;
+      const b = loopById.get(edge.to)!;
+      ctx.moveTo(left + (a.column + .5) * cell, top + (rows - a.row - .5) * cell);
+      ctx.lineTo(left + (b.column + .5) * cell, top + (rows - b.row - .5) * cell);
+    }
+    ctx.stroke();
+
+    // Show the sensor footprint; the resistor itself is not a conductive trace.
+    ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5; ctx.strokeStyle = "#b66547";
+    for (const sensor of project.sensors) {
+      ctx.strokeRect(left + sensor.column * cell, top + (rows - sensor.row - sensor.height) * cell, sensor.width * cell, sensor.height * cell);
+    }
+    ctx.setLineDash([]);
+
+    graph.conductivePaths.forEach((path, index) => {
+      const color = colors[index % colors.length];
+      ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = Math.max(1.6, cell * .48);
+      ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.beginPath();
+      for (const [from, to] of path.edges) {
+        const [, ac, ar] = from.split(":").map(Number), [, bc, br] = to.split(":").map(Number);
+        ctx.moveTo(left + (ac + .5) * cell, top + (rows - ar - .5) * cell);
+        ctx.lineTo(left + (bc + .5) * cell, top + (rows - br - .5) * cell);
+      }
+      ctx.stroke();
+      for (const id of path.nodeIds) {
+        const [, column, row] = id.split(":").map(Number);
+        ctx.beginPath(); ctx.arc(left + (column + .5) * cell, top + (rows - row - .5) * cell, Math.max(1.5, cell * .3), 0, Math.PI * 2); ctx.fill();
+      }
+    });
+  }, [graph, project.sensors]);
+
+  return <section className="knit-graph-preview">
+    <div className="section-heading"><div><h3>Knit Graph · loop topology</h3><p className="hint">Loop-level preview following the <a href="https://mhofmann-khoury.github.io/knit_graph/" target="_blank" rel="noreferrer">Knit Graph representation</a>. Dotted outline = sensor region; colored loops = assigned conductive-yarn route.</p></div><span>{graph.structure}</span></div>
+    {graph.legacyRoutePreview && <p className="hint">Existing template routes are grouped by their A/B labels for preview; this does not add or infer saved electrical connections.</p>}
+    <canvas ref={ref} width={720} height={480} aria-label={`Knit graph with ${graph.loops.length} stitch loops and ${graph.conductivePaths.length} conductive yarn paths`} />
+    <div className="knit-graph-stats"><span>{graph.loops.length.toLocaleString()} loop nodes</span><span>{graph.edges.filter(edge => edge.kind === "stitch").length.toLocaleString()} stitch links</span><span>{graph.conductivePaths.length} conductive nets</span></div>
+    {graph.conductivePaths.map((path, index) => <p className="knit-graph-net" key={path.netId}><i style={{ background: colors[index % colors.length] }} />{path.name}<strong>{path.connected ? "Topology connected" : "Topology disconnected"}</strong></p>)}
+    {graph.warnings.length > 0 && <ul className="knit-graph-warnings">{graph.warnings.map(warning => <li key={warning}>{warning}</li>)}</ul>}
+    <p className="hint">This is a graph-topology preview, not machine instruction output. Actual knittability still depends on machine, gauge, carriers, yarn and fabrication checks.</p>
+  </section>;
+}

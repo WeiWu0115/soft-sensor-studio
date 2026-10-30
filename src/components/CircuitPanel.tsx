@@ -14,6 +14,7 @@ import {
   finishTrace,
   designSummary,
 } from "../services/circuit";
+import { KnitGraphPreview } from "./KnitGraphPreview";
 export function CircuitPanel() {
   const { project: p, commit, select, selected } = useStudio(),
     ui = useCircuitUI(),
@@ -243,6 +244,7 @@ export function CircuitPanel() {
           return <div className="measurement" key={net.id}><span>{net.name}</span><strong>{pins.length} pins · {pins.map((pin) => `${c.elements.find((element) => element.id === pin.elementId)?.name ?? "?"} (${pin.name})`).join(" · ")}</strong></div>;
         })}
       </section>
+      <KnitGraphPreview project={p} />
       <section>
         <h3>Visual layers</h3>
         {Object.entries(ui.layers).map(([key, on]) => (
