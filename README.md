@@ -56,9 +56,9 @@ The cylinder is a spatial preview, not a cloth, anatomical fit, electrical or cl
 
 ## Python knit-graph adapter · phase 1
 
-The CAD can export a `soft-sensor-studio-knit-handoff-v1` JSON. `machine_export/` now provides a Python CLI that validates that handoff and maps supported knit/purl (`K`/`P`) base topology into Hofmann's upstream `knit_graphs.Knit_Graph`, `Loop`, and `Yarn` objects. See [`machine_export/README.md`](machine_export/README.md) for installation and usage. This phase reuses the upstream graph representation; it does not generate KnitScript, Knitout, or SWG DAT.
+The CAD can export a `soft-sensor-studio-knit-handoff-v1` JSON. `machine_export/` provides a Python CLI that validates that handoff and maps supported knit/purl (`K`/`P`) base topology into Hofmann's upstream `knit_graphs.Knit_Graph`, `Loop`, and `Yarn` objects. With the optional KnitScript dependency, it can also compile a circuit-free knit-only Jersey **flat swatch** to `.ks` and Knitout `.k` files. See [`machine_export/README.md`](machine_export/README.md) for installation and usage.
 
-Tuck/miss/transfer and other compound structures, conductive-yarn inlay, sensor pads, cast-on/bind-off, carrier changes, machine gauge, and SWG model checks still need explicit mappings. The report always marks `machine_ready: false`; a valid graph is not proof of machine knittability or electrical continuity. The next milestone is operation mapping and a KnitScript/Knitout compiler path, followed by DAT conversion and validation against the exact SWG model.
+Sensor projects are still blocked from machine compilation: conductive-yarn inlay, sensor pads, carrier changes, tube construction, finishing, machine gauge, and SWG model checks need explicit mappings. The report always marks `machine_ready: false`; the generated swatch `.k` and experimental `.dat` are not machine-validated. The DAT converter needs a separate pinned environment because its current published version conflicts with newer interpreter packages.
 
 ## Verification performed
 

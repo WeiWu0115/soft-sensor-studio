@@ -63,7 +63,7 @@ export default function Home() {
             <article className="machine-stage-next">
               <span className="machine-stage">03 · PYTHON GRAPH ADAPTER</span>
               <h3>Carry the design into a knitting graph</h3>
-              <p>Export the CAD handoff and use the Python adapter to validate its stitch grid and build Hofmann’s Knit_Graph objects. This is the first compiler-integration step; it does not produce a machine file yet.</p>
+              <p>Export the CAD handoff and build Hofmann’s Knit_Graph objects. Circuit-free knit-only Jersey swatches can compile to Knitout and experimental DAT; sensor circuits are blocked until their yarn, carrier, and bed operations are mapped.</p>
               <a href="https://github.com/WeiWu0115/soft-sensor-studio/tree/main/machine_export" target="_blank" rel="noreferrer">Python adapter · setup and use ↗</a>
               <a href="https://make4all.org/portfolio/knitscript-a-domain-specific-language-for-advanced-machine-knitting/" target="_blank" rel="noreferrer">Hofmann et al. · KnitScript research ↗</a>
               <a href="https://github.com/mhofmann-Khoury/knit_script" target="_blank" rel="noreferrer">KnitScript compiler ↗</a>
@@ -71,7 +71,7 @@ export default function Home() {
               <a href="https://www.shimaseiki.com/product/knit/swg_n2/" target="_blank" rel="noreferrer">SHIMA SEIKI SWG machine ↗</a>
             </article>
           </div>
-          <p className="machine-path-note">Current output: CAD handoff JSON plus a Python topology report/Knit_Graph model. The next stage is KnitScript → Knitout → Shima Seiki DAT. No machine-ready file is produced until machine-specific courses, carriers, gauge, conductive-yarn operations, and a named SWG model have been mapped and validated.</p>
+          <p className="machine-path-note">Current output: CAD handoff JSON and Knit_Graph model; circuit-free knit-only Jersey can additionally produce a flat swatch Knitout (.k) and experimental DAT in a pinned converter environment. Sensor-bearing designs still need conductive-yarn, bed, carrier, garment-shaping, and confirmed SWG-model mappings before their DAT can be generated.</p>
         </section>
 
         <section id="workflow" className="home-workflow">

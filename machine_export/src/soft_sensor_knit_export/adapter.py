@@ -8,6 +8,7 @@ carrier, bed, and inlay rules would imply fabrication semantics we do not have.
 from __future__ import annotations
 
 from collections import Counter
+from tempfile import TemporaryDirectory
 from typing import Any
 
 
@@ -17,6 +18,79 @@ SUPPORTED_OPERATIONS = {"K", "P"}
 
 class HandoffError(ValueError):
     """Raised when an exported handoff cannot be safely interpreted."""
+
+
+def build_plain_jersey_knitscript(handoff: dict[str, Any]) -> str:
+    """Build a flat Jersey swatch program for an empty, circuit-free CAD project.
+
+    This intentionally does not claim to compile the CAD's cylindrical garment
+    or any sensor/electrical features. It is a base-fabric compiler smoke path.
+    """
+    report = inspect_handoff(handoff)
+    if not report["topology_valid"]:
+        raise HandoffError("Loop topology failed validation; KnitScript was not generated.")
+    graph = handoff["graph"]
+    project = handoff.get("project") or {}
+    circuit = project.get("circuit") or {}
+    if graph.get("structure") != "jersey":
+        raise HandoffError("KnitScript swatch export currently supports base structure 'jersey' only.")
+    if report["unsupported_operations"] or set(report["stitch_operations"]) != {"K"}:
+        raise HandoffError("KnitScript swatch export currently supports knit-only (K) jersey.")
+    if project.get("sensors") or circuit.get("elements") or circuit.get("nets") or circuit.get("pins"):
+        raise HandoffError(
+            "This handoff contains sensor or circuit geometry. Conductive yarn and sensor regions are not compiled yet."
+        )
+    if report["conductive_path_count"]:
+        raise HandoffError("Conductive yarn paths are not compiled by the plain Jersey swatch exporter.")
+
+    # This follows KnitScript's published jersey_swatch.ks cast-on and course idiom.
+    return """with Carrier as c1:{
+    in Leftward direction:{
+        tuck Front_Needles[1:width:2];
+    }
+    in Rightward direction:{
+        tuck Front_Needles[0:width:2];
+    }
+    releasehook;
+    for _ in range(height):{
+        in reverse direction:{
+            knit Loops;
+        }
+    }
+}
+"""
+
+
+def compile_plain_jersey_swatch(handoff: dict[str, Any], knitout_path: str):
+    """Compile a restricted circuit-free Jersey handoff to a Knitout ``.k`` file."""
+    from pathlib import Path
+
+    script = build_plain_jersey_knitscript(handoff)
+    try:
+        from knit_script.interpret_knit_script import knit_script_to_knitout
+    except ImportError as error:
+        raise HandoffError(
+            "Missing optional dependency 'knit-script'. Install with pip install -e '.[knit-script]' from machine_export."
+        ) from error
+
+    output = Path(knitout_path)
+    script_path = output.with_suffix(".ks")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    script_path.write_text(script, encoding="utf-8")
+    try:
+        with TemporaryDirectory(prefix="soft-sensor-knitout-", dir=output.parent) as temporary_directory:
+            temporary_output = Path(temporary_directory) / output.name
+            knit_script_to_knitout(
+                pattern=script,
+                out_file_name=str(temporary_output),
+                pattern_is_filename=False,
+                width=handoff["graph"]["columns"],
+                height=handoff["graph"]["rows"],
+            )
+            temporary_output.replace(output)
+    except Exception as error:
+        raise HandoffError(f"KnitScript could not compile this Jersey swatch: {error}") from error
+    return script_path, output
 
 
 def _coordinate(loop_id: str) -> tuple[int, int]:
@@ -83,10 +157,16 @@ def inspect_handoff(handoff: dict[str, Any]) -> dict[str, Any]:
     unsupported = sorted(set(operations) - SUPPORTED_OPERATIONS)
     course_plan = handoff.get("coursePlan")
     route_count = len(graph.get("conductivePaths") or [])
-    sensors = (handoff.get("project") or {}).get("sensors") or []
+    project = handoff.get("project") or {}
+    sensors = project.get("sensors") or []
+    circuit = project.get("circuit") or {}
     blockers = []
     if unsupported:
         blockers.append("Unsupported stitch operations: " + ", ".join(unsupported))
+    if sensors:
+        blockers.append("Sensor regions are design intent; no sensor-specific knitting operations are compiled.")
+    if circuit.get("elements") or circuit.get("nets") or circuit.get("pins"):
+        blockers.append("Circuit geometry, nets, and terminals are not compiled into yarn/carrier operations.")
     if route_count:
         blockers.append("Conductive routes are design intent; yarn inlay/carrier operations are not compiled.")
     if not course_plan:
@@ -119,7 +199,7 @@ def inspect_handoff(handoff: dict[str, Any]) -> dict[str, Any]:
         "course_count": len(course_plan) if isinstance(course_plan, list) else 0,
         "structure": graph.get("structure"),
         "blockers": blockers,
-        "next_stage": "Add explicit machine/course semantics, compile supported structures to KnitScript/Knitout, then validate the selected SWG model.",
+        "next_stage": "Map sensor yarns, garment shaping, and the confirmed SWG model before compiling a sensor-bearing machine program. The Jersey swatch target compiles base fabric only.",
     }
 
 
