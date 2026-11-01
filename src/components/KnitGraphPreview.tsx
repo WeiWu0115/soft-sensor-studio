@@ -9,6 +9,15 @@ export function KnitGraphPreview({ project }: { project: Project }) {
   const graph = useMemo(() => buildKnitGraph(project), [project]);
   const coursePlan = useMemo(() => buildCoursePlan(graph), [graph]);
   const operationCounts = useMemo(() => summarizeCoursePlan(coursePlan), [coursePlan]);
+  const circuit = project.circuit;
+  const swatchBlockers = [
+    ...(project.sensors.length ? ["sensor regions"] : []),
+    ...(circuit?.elements.length || circuit?.nets.length || circuit?.pins.length ? ["circuit geometry and terminals"] : []),
+    ...(graph.conductivePaths.length ? ["conductive yarn paths"] : []),
+    ...(graph.loops.length !== graph.columns * graph.rows ? ["incomplete loop grid"] : []),
+    ...(graph.structure !== "jersey" || graph.loops.some(loop => loop.stitch !== "K") ? ["non-Jersey or non-knit stitch operations"] : []),
+  ];
+  const canCompilePlainSwatch = swatchBlockers.length === 0;
   const exportPythonHandoff = () => {
     const payload = {
       format: "soft-sensor-studio-knit-handoff-v1",
@@ -111,7 +120,23 @@ export function KnitGraphPreview({ project }: { project: Project }) {
         <a href="https://github.com/mhofmann-Khoury/knitout_to_dat_python" target="_blank" rel="noreferrer">SWG Knitout → DAT converter ↗</a>
         <a href="https://www.shimaseiki.com/product/knit/swg_n2/" target="_blank" rel="noreferrer">SHIMA SEIKI SWG machine ↗</a>
         <a href="https://github.com/WeiWu0115/soft-sensor-studio/tree/main/machine_export" target="_blank" rel="noreferrer">Python adapter setup ↗</a>
-        <small>Download the JSON to build a Knit_Graph. Only circuit-free knit-only Jersey swatches compile to .ks/.k and experimental DAT; sensor yarns and routes are not compiled, and the output is not machine-validated.</small>
+        <div className="knit-export-pipeline">
+          <strong>Export pipeline · current project</strong>
+          <ol>
+            <li><b>CAD → JSON</b> · Download the editable project handoff above.</li>
+            <li><b>Python → Knit_Graph</b> · Validate the stitch grid and loop topology.</li>
+            <li><b>KnitScript → .ks / Knitout .k</b> · Available for circuit-free, knit-only Jersey swatches.</li>
+            <li><b>Knitout → SWG .dat</b> · Experimental converter; requires a separate pinned Python environment and a matching machine/gauge header.</li>
+          </ol>
+          <p className={canCompilePlainSwatch ? "knit-export-status ready" : "knit-export-status blocked"}>
+            <b>{canCompilePlainSwatch ? "Base swatch path available." : "Machine compile blocked for this design."}</b>{" "}
+            {canCompilePlainSwatch
+              ? "This generates a flat base-fabric swatch, not the garment."
+              : `Not mapped yet: ${swatchBlockers.join(", ")}.`}
+          </p>
+          <p className="knit-export-caveat">KnitScript currently labels its default target SWG091N2 / Gauge 15; confirm your actual model and gauge. No output has been validated on a physical machine. Sensor-bearing designs do not produce .ks, .k, or .dat yet.</p>
+        </div>
+        <small>The browser downloads JSON only. Follow Python adapter setup for local .ks/.k compilation and guarded experimental DAT conversion.</small>
       </div>
     </details>
     <p className="hint">This is a graph-topology preview, not machine instruction output. Actual knittability still depends on machine, gauge, carriers, yarn and fabrication checks.</p>
