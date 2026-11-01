@@ -110,7 +110,8 @@ export function KnitGraphPreview({ project }: { project: Project }) {
         <a href="https://github.com/mhofmann-Khoury/knit_script" target="_blank" rel="noreferrer">KnitScript compiler ↗</a>
         <a href="https://github.com/mhofmann-Khoury/knitout_to_dat_python" target="_blank" rel="noreferrer">SWG Knitout → DAT converter ↗</a>
         <a href="https://www.shimaseiki.com/product/knit/swg_n2/" target="_blank" rel="noreferrer">SHIMA SEIKI SWG machine ↗</a>
-        <small>The JSON is a project handoff for a future Python adapter. It cannot be loaded by the knitting machine as-is.</small>
+        <a href="https://github.com/WeiWu0115/soft-sensor-studio/tree/main/machine_export" target="_blank" rel="noreferrer">Python adapter setup ↗</a>
+        <small>Download this JSON, then use the Python adapter to validate the loop grid and create a Knit_Graph. It is still not a KnitScript, Knitout, or SWG DAT file.</small>
       </div>
     </details>
     <p className="hint">This is a graph-topology preview, not machine instruction output. Actual knittability still depends on machine, gauge, carriers, yarn and fabrication checks.</p>

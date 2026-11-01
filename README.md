@@ -54,6 +54,12 @@ The intended later workflow is CAD → intermediate stitch representation → ve
 
 The cylinder is a spatial preview, not a cloth, anatomical fit, electrical or clinical prediction. Regions may overlap with a warning. Transparent surfaces can have normal WebGL sorting artifacts. Large grids are intended for desktop use; zoom/pan is supported. Import files are limited to 5 MB and 500 sensors/materials. There is no machine validation. Actual fabrication requires official import specification review, carrier/operation mapping, swatch gauge measurement, electrode design, electrical calibration and supervised machine trials.
 
+## Python knit-graph adapter · phase 1
+
+The CAD can export a `soft-sensor-studio-knit-handoff-v1` JSON. `machine_export/` now provides a Python CLI that validates that handoff and maps supported knit/purl (`K`/`P`) base topology into Hofmann's upstream `knit_graphs.Knit_Graph`, `Loop`, and `Yarn` objects. See [`machine_export/README.md`](machine_export/README.md) for installation and usage. This phase reuses the upstream graph representation; it does not generate KnitScript, Knitout, or SWG DAT.
+
+Tuck/miss/transfer and other compound structures, conductive-yarn inlay, sensor pads, cast-on/bind-off, carrier changes, machine gauge, and SWG model checks still need explicit mappings. The report always marks `machine_ready: false`; a valid graph is not proof of machine knittability or electrical continuity. The next milestone is operation mapping and a KnitScript/Knitout compiler path, followed by DAT conversion and validation against the exact SWG model.
+
 ## Verification performed
 
 - `npm install`: completed; final audit reported zero vulnerabilities.

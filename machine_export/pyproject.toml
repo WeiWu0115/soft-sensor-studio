@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "soft-sensor-knit-export"
+version = "0.1.0"
+description = "Phase-one Python adapter for Soft Sensor Studio knit-graph handoffs"
+requires-python = ">=3.11,<3.14"
+dependencies = ["knit-graphs>=0.1.4,<0.2.0"]
+
+[project.scripts]
+soft-sensor-knit-export = "soft_sensor_knit_export.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
